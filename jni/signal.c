@@ -24,7 +24,7 @@ jstring Java_com_young_ApiDemo_ndk_SignalActivity_SignalTest1(JNIEnv *env, jobje
 jstring Java_com_young_ApiDemo_ndk_SignalActivity_SignalTest2(JNIEnv *env, jobject obj) {
     int pid = getpid();
     LOGI("send SIGUSR2 to self process (pid = %d)", getpid());
-    tkill(pid, SIGUSR2);
+    kill(pid, SIGUSR2);
     return (*env)->NewStringUTF(env, "send SIGUSR2 to self");
 }
 
@@ -51,7 +51,7 @@ jstring Java_com_young_ApiDemo_ndk_SignalActivity_SignalTest3(JNIEnv *env, jobje
 jstring Java_com_young_ApiDemo_ndk_SignalActivity_SignalTest4(JNIEnv *env, jobject obj) {
     int pid = getpid();
     LOGI("send SIGSEGV to self process (pid = %d)", getpid());
-    tkill(pid, SIGSEGV);
+    kill(pid, SIGSEGV);
     return (*env)->NewStringUTF(env, "send SIGSEGV to self");
 }
 
@@ -89,12 +89,12 @@ jstring Java_com_young_ApiDemo_ndk_SignalActivity_SignalTest5(JNIEnv *env, jobje
         LOGI("pthread_create failed (%s)", strerror(err));
         return (*env)->NewStringUTF(env, "Error: pthread_create");
     }
-    LOGI("[parent %d] parent will sleep 1s, and tkill child SIGUSR2", gettid());
+    LOGI("[parent %d] parent will sleep 1s, and kill child SIGUSR2", gettid());
     sleep(1);
-    pthread_kill(thr, SIGUSR2); // call tkill syscall
-    LOGI("[parent %d] parent will sleep 1s, and tkill child SIGPIPE", gettid());
+    pthread_kill(thr, SIGUSR2); // call kill syscall
+    LOGI("[parent %d] parent will sleep 1s, and kill child SIGPIPE", gettid());
     sleep(1);
     pthread_kill(thr, SIGPIPE);
     pthread_join(thr, NULL);
-    return (*env)->NewStringUTF(env, "child sigsuspends SIGUSR2, parent tkills SIGUSR2 and SIGPIPE");
+    return (*env)->NewStringUTF(env, "child sigsuspends SIGUSR2, parent kills SIGUSR2 and SIGPIPE");
 }
