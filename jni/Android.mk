@@ -45,3 +45,9 @@ LOCAL_MODULE := syscall
 LOCAL_SRC_FILES := syscall.c
 LOCAL_LDLIBS := -llog
 include $(BUILD_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := greylist
+LOCAL_SRC_FILES := greylist.c
+LOCAL_LDLIBS := -llog -ldl
+include $(BUILD_SHARED_LIBRARY)

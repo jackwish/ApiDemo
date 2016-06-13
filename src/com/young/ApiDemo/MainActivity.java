@@ -12,6 +12,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private static final String TAG = "ApiDemo";
     private Button sdkBtn;
     private Button ndkBtn;
+    private Button linkerBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +22,10 @@ public class MainActivity extends Activity implements OnClickListener {
         // get buttons and set listeners
         sdkBtn = (Button)findViewById(R.id.sdk_button);
         ndkBtn = (Button)findViewById(R.id.ndk_button);
+        linkerBtn = (Button)findViewById(R.id.linker_button);
         sdkBtn.setOnClickListener(this);
         ndkBtn.setOnClickListener(this);
+        linkerBtn.setOnClickListener(this);
     }
 
     @Override
@@ -35,6 +38,10 @@ public class MainActivity extends Activity implements OnClickListener {
         case R.id.ndk_button:
             Intent ndkIntent = new Intent(MainActivity.this, NdkActivity.class);
             startActivity(ndkIntent);
+            break;
+        case R.id.linker_button:
+            Intent linkerIntent = new Intent(MainActivity.this, LinkerActivity.class);
+            startActivity(linkerIntent);
             break;
         default:
             break;

@@ -44,6 +44,10 @@
         <activity android:name=".ndk.SyscallActivity" android:label="@string/syscall_button" />
         <activity android:name=".ndk.SignalActivity" android:label="@string/signal_button" />
 
+        <activity android:name=".LinkerActivity" android:label="@string/linker_button" />
+        <activity android:name=".linker.GreylistActivity" android:label="@string/greylist_button" />
+
+
     </application>
 
 </manifest>

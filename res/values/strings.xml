@@ -4,6 +4,7 @@
     <!-- res/layout/activity_main.xml -->
     <string name="sdk_button">SDK</string>
     <string name="ndk_button">NDK</string>
+    <string name="linker_button">linker</string>
     <!-- res/layout/activity_sdk.xml -->
     <string name="ipc_button">IPC</string>
     <string name="widget_button">Widget</string>
@@ -79,4 +80,9 @@
     <string name="sig_method_button4">Signal 4 (tkill SIGSEGV)</string>
     <string name="sig_method_button5">Signal 5 (sigsuspend)</string>
     <string name="signal_text">Default: Signal Test</string>
+    <!-- res/layout/activity_linker.xml -->
+    <string name="greylist_button">Greylist</string>
+    <!-- res/layout/linker_greylist.xml -->
+    <string name="greylist_method_button1">Greylist 1 (libandroid_runtime.so)</string>
+    <string name="greylist_text">default Greylist text</string>
 </resources>
