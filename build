@@ -20,20 +20,27 @@ if [[ $# -eq 2 ]]; then
         ver=release
     fi
 fi
-curPath=`pwd`
-apkName=`basename ${curPath}`
+apkName=ApiDemo
 
 # build apk
 echo "1. generate build configuration files ..."
 android update project -n ${apkName} -p . -t ${targetId}
+if [[ $? -ne 0 ]]; then
+    echo "gen java failed!"
+    exit -1
+fi
 echo "2. build NDK libraries ..."
 if [[ -d ./jni ]]; then
     ndk-build clean
     ndk-build
+    if [[ $? -ne 0 ]]; then
+        echo "ndk build failed!"
+        exit -1
+    fi
 fi
 echo "3. build APK ..."
-ant clean 1> /dev/null
-ant ${ver} 1> /dev/null
+ant clean
+ant ${ver}
 
 # install
 echo "4. install APK ..."
