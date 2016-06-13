@@ -9,21 +9,15 @@
     android:orientation="vertical" >
 
     <Button
-        android:id="@+id/sdk_button"
+        android:id="@+id/greylist_method_button1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sdk_button" />
+        android:text="@string/greylist_method_button1" />
 
-    <Button
-        android:id="@+id/ndk_button"
+    <TextView
+        android:id="@+id/greylist_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ndk_button" />
-
-    <Button
-        android:id="@+id/linker_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/linker_button" />
+        android:text="@string/greylist_text" />
 
 </LinearLayout>

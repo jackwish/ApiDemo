@@ -9,21 +9,9 @@
     android:orientation="vertical" >
 
     <Button
-        android:id="@+id/sdk_button"
+        android:id="@+id/greylist_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sdk_button" />
-
-    <Button
-        android:id="@+id/ndk_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/ndk_button" />
-
-    <Button
-        android:id="@+id/linker_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/linker_button" />
+        android:text="@string/greylist_button" />
 
 </LinearLayout>
