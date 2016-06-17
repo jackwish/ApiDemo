@@ -5,9 +5,15 @@ Android SDK and NDK Api Demo
 
 Usages:
 
-<pre><code>
-\# cd ApiDemo
-\# android list target (choose SDK target ID)
-\# ./make \<id\>|\<android-N\> (for debug version)
-\# ./make \<id\>|\<android-N\> 1 (for release version)
-</pre></code>
+```
+# build & install package
+./build [sdk version] [debug/release]
+```
+
+Examples:
+
+```
+./build # use latest Android SDK
+./build android-20 # use android-20
+./build android-20 1 # build release(signed) version with android-20
+```
