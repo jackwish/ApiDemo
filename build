@@ -11,6 +11,10 @@ fi
 
 # prepare args
 targetId=android-23
+if [ $# -eq 0 ]; then
+    echo "No sdk version provided, use latested: ${targetId}"
+    targetId=$(android list target -c -0 | head -n 1)
+fi
 if [[ $# -eq 1 ]]; then
     if [ ${1} == "c" ]; then
         rm -rf bin/ gen/ libs/ obj/ build.xml local.properties proguard-project.txt  project.properties
@@ -27,12 +31,14 @@ fi
 apkName=ApiDemo
 
 # build apk
+echo
 echo "1. generate build configuration files ..."
 android update project -n ${apkName} -p . -t ${targetId}
 if [[ $? -ne 0 ]]; then
     echo "gen java failed!"
     exit -1
 fi
+echo
 echo "2. build NDK libraries ..."
 if [[ -d ./jni ]]; then
     ndk-build clean
@@ -42,6 +48,7 @@ if [[ -d ./jni ]]; then
         exit -1
     fi
 fi
+echo
 echo "3. build APK ..."
 ant clean
 ant ${ver}
