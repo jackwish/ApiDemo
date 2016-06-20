@@ -9,9 +9,9 @@
     android:orientation="vertical" >
 
     <Button
-        android:id="@+id/greylist_button"
+        android:id="@+id/namespace_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/greylist_button" />
+        android:text="@string/namespace_button" />
 
 </LinearLayout>

@@ -4,7 +4,7 @@
 #include <dlfcn.h>
 #include <time.h>
 
-JNIEXPORT jboolean JNICALL Java_com_young_ApiDemo_linker_GreylistActivity_singleton(JNIEnv *env, jobject obj, jstring lib)
+JNIEXPORT jboolean JNICALL Java_com_young_ApiDemo_linker_NamespaceActivity_nsLoadLib(JNIEnv *env, jobject obj, jstring lib)
 {
     const char* libname = (*env)->GetStringUTFChars(env, lib, NULL);
     if (libname == NULL) {
@@ -13,6 +13,11 @@ JNIEXPORT jboolean JNICALL Java_com_young_ApiDemo_linker_GreylistActivity_single
     }
 
     void* handle = dlopen(libname, RTLD_NOW);
+    if (handle == NULL) {
+        LOGI("fail to load %s", libname);
+    } else {
+        LOGI("loaded %s", libname);
+    }
 
     (*env)->ReleaseStringUTFChars(env, lib, libname);
 

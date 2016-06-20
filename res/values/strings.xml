@@ -81,8 +81,9 @@
     <string name="sig_method_button5">Signal 5 (sigsuspend)</string>
     <string name="signal_text">Default: Signal Test</string>
     <!-- res/layout/activity_linker.xml -->
-    <string name="greylist_button">Greylist</string>
-    <!-- res/layout/linker_greylist.xml -->
-    <string name="greylist_method_button1">Greylist 1 (libandroid_runtime.so)</string>
-    <string name="greylist_text">default Greylist text</string>
+    <string name="namespace_button">Namespace</string>
+    <!-- res/layout/linker_namespace.xml -->
+    <string name="ns_load_private_lib">load Non-public library</string>
+    <string name="ns_load_greylist_lib">load Greylist library</string>
+    <string name="namespace_text">default namespace output text</string>
 </resources>
