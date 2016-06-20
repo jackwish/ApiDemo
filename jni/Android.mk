@@ -47,7 +47,7 @@ LOCAL_LDLIBS := -llog
 include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := greylist
-LOCAL_SRC_FILES := greylist.c
+LOCAL_MODULE := namespace
+LOCAL_SRC_FILES := namespace.c
 LOCAL_LDLIBS := -llog -ldl
 include $(BUILD_SHARED_LIBRARY)

@@ -1,6 +1,6 @@
 package com.young.ApiDemo;
 
-import com.young.ApiDemo.linker.GreylistActivity;
+import com.young.ApiDemo.linker.NamespaceActivity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +12,7 @@ import android.widget.Button;
 public class LinkerActivity extends Activity implements OnClickListener {
     private static final String TAG = "linker test";
     private Button jniBtn;
-    private Button greylistBtn;
+    private Button namespaceBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,16 +20,16 @@ public class LinkerActivity extends Activity implements OnClickListener {
         setContentView(R.layout.linker);
         Log.i(TAG, "enter Linker Activity");
         // get buttons and set listeners
-        greylistBtn = (Button)findViewById(R.id.greylist_button);
-        greylistBtn.setOnClickListener(this);
+        namespaceBtn = (Button)findViewById(R.id.namespace_button);
+        namespaceBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-        case R.id.greylist_button:
-            Intent greylistIntent = new Intent(LinkerActivity.this, GreylistActivity.class);
-            startActivity(greylistIntent);
+        case R.id.namespace_button:
+            Intent namespaceIntent = new Intent(LinkerActivity.this, NamespaceActivity.class);
+            startActivity(namespaceIntent);
             break;
         default:
             break;
