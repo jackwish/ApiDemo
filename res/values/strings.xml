@@ -83,6 +83,7 @@
     <!-- res/layout/activity_linker.xml -->
     <string name="namespace_button">Namespace</string>
     <!-- res/layout/linker_namespace.xml -->
+    <string name="ns_load_public_lib">load Public library</string>
     <string name="ns_load_private_lib">load Non-public library</string>
     <string name="ns_load_greylist_lib">load Greylist library</string>
     <string name="namespace_text">default namespace output text</string>
