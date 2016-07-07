@@ -12,6 +12,7 @@ import android.widget.Button;
 public class NamespaceActivity extends Activity implements OnClickListener {
     private static final String TAG = "ApiDemo";
     private TextView NamespaceTxt;
+    private Button btnPublic;
     private Button btnPrivate;
     private Button btnGreylist;
 
@@ -22,6 +23,8 @@ public class NamespaceActivity extends Activity implements OnClickListener {
         // get textview
         NamespaceTxt = (TextView)findViewById(R.id.namespace_text);
         // get buttons and set listeners
+        btnPublic = (Button)findViewById(R.id.ns_load_public_lib);
+        btnPublic.setOnClickListener(this);
         btnPrivate = (Button)findViewById(R.id.ns_load_private_lib);
         btnPrivate.setOnClickListener(this);
         btnGreylist = (Button)findViewById(R.id.ns_load_greylist_lib);
@@ -36,27 +39,27 @@ public class NamespaceActivity extends Activity implements OnClickListener {
         System.loadLibrary("namespace");
     }
 
+    private String verify_library_loading(String lib, String type, boolean expect)
+    {
+        Log.i(TAG, "going to load " + type + " library \"" + lib + "\" to verify - if namespace based dynamic link works");
+        boolean loaded = nsLoadLib(lib);
+        return (loaded == expect) ? (type + " library \"" + lib + "\" load pass - namespace works") :
+            (type + " library \"" + lib + "\" load pass - namespace doesn't work");
+    }
+
     @Override
     public void onClick(View view) {
         String retString = "nothing";
+        String libtest;
         switch (view.getId()) {
+        case R.id.ns_load_public_lib:
+            retString = verify_library_loading("libandroid.so", "public", true);
+            break;
         case R.id.ns_load_private_lib:
-            String libhw = "libhardware.so";
-            Log.i(TAG, "going to load private lib \"" + libhw + "\" to verify - if namespace based dynamic link works");
-            if (nsLoadLib(libhw) == true) {
-                retString = "private lib \"" + libhw + "\" load pass - namespace works";
-            } else {
-                retString = "private lib \"" + libhw + "\" load fail - namespace doesn't work";
-            }
+            retString = verify_library_loading("libhardware.so", "private", false);
             break;
         case R.id.ns_load_greylist_lib:
-            String libtest = "libandroid_runtime.so";
-            Log.i(TAG, "going to load greylist lib \"" + libtest + "\" to verify - if namespace based dynamic link works");
-            if (nsLoadLib(libtest) == true) {
-                retString = "greylist lib \"" + libtest + "\" load pass - namespace works";
-            } else {
-                retString = "greylist lib \"" + libtest + "\" load fail - namespace doesn't work";
-            }
+            retString = verify_library_loading("libandroid_runtime.so", "greylist", true);
             break;
         default:
             break;

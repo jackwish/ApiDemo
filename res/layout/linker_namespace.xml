@@ -9,6 +9,12 @@
     android:orientation="vertical" >
 
     <Button
+        android:id="@+id/ns_load_public_lib"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ns_load_public_lib" />
+
+    <Button
         android:id="@+id/ns_load_private_lib"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
