@@ -56,7 +56,6 @@ public class NamespaceActivity extends Activity implements OnClickListener {
     @Override
     public void onClick(View view) {
         String retString = "nothing";
-        String libtest;
         switch (view.getId()) {
         case R.id.ns_load_public_lib:
             retString = verify_library_loading("libandroid.so", "public", true);

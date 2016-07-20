@@ -24,7 +24,7 @@ import dalvik.system.DexClassLoader;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
 
-public class MiscActivity extends Activity implements OnClickListener {
+public class sdkMiscActivity extends Activity implements OnClickListener {
     private static final String TAG = "ApiDemo";
     private Button abiBtn;
     private Button envDirBtn;
