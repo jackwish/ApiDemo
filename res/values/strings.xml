@@ -5,11 +5,12 @@
     <string name="sdk_button">SDK</string>
     <string name="ndk_button">NDK</string>
     <string name="linker_button">linker</string>
+    <string name="misc_button">Misc</string>
     <!-- res/layout/activity_sdk.xml -->
     <string name="ipc_button">IPC</string>
     <string name="widget_button">Widget</string>
     <string name="datastorage_button">DataStorage</string>
-    <string name="misc_button">Misc</string>
+    <string name="sdkmisc_button">Misc</string>
     <!-- res/layout/sdk_ipc.xml -->
     <string name="activity_button">Activity</string>
     <string name="service_button">Service</string>
@@ -88,4 +89,7 @@
     <string name="ns_load_greylist_lib">load Greylist library</string>
     <string name="ns_check_armpath">scan system library path</string>
     <string name="namespace_text">default namespace output text</string>
+    <!-- res/layout/misc.xml -->
+    <string name="open_file">try open file in directory</string>
+    <string name="misc_text">nothing happened yet</string>
 </resources>

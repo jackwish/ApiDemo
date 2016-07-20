@@ -3,7 +3,7 @@ package com.young.ApiDemo;
 import com.young.ApiDemo.sdk.IpcActivity;
 import com.young.ApiDemo.sdk.WidgetActivity;
 import com.young.ApiDemo.sdk.DataStorageActivity;
-import com.young.ApiDemo.sdk.MiscActivity;
+import com.young.ApiDemo.sdk.sdkMiscActivity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,7 +51,7 @@ public class SdkActivity extends Activity implements OnClickListener {
             startActivity(datastorageIntent);
             break;
         case R.id.misc_button:
-            Intent miscIntent = new Intent(SdkActivity.this, MiscActivity.class);
+            Intent miscIntent = new Intent(SdkActivity.this, sdkMiscActivity.class);
             startActivity(miscIntent);
             break;
         default:

@@ -51,3 +51,9 @@ LOCAL_MODULE := namespace
 LOCAL_SRC_FILES := namespace.cc
 LOCAL_LDLIBS := -llog -ldl
 include $(BUILD_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := misc
+LOCAL_SRC_FILES := misc.cc
+LOCAL_LDLIBS := -llog -ldl
+include $(BUILD_SHARED_LIBRARY)
