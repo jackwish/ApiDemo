@@ -48,6 +48,6 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := namespace
-LOCAL_SRC_FILES := namespace.c
+LOCAL_SRC_FILES := namespace.cc
 LOCAL_LDLIBS := -llog -ldl
 include $(BUILD_SHARED_LIBRARY)

@@ -26,6 +26,12 @@
         android:layout_height="wrap_content"
         android:text="@string/ns_load_greylist_lib" />
 
+    <Button
+        android:id="@+id/ns_check_armpath"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ns_check_armpath" />
+
     <TextView
         android:id="@+id/namespace_text"
         android:layout_width="match_parent"
