@@ -15,6 +15,7 @@ public class NamespaceActivity extends Activity implements OnClickListener {
     private Button btnPublic;
     private Button btnPrivate;
     private Button btnGreylist;
+    private Button btnArmpath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +30,15 @@ public class NamespaceActivity extends Activity implements OnClickListener {
         btnPrivate.setOnClickListener(this);
         btnGreylist = (Button)findViewById(R.id.ns_load_greylist_lib);
         btnGreylist.setOnClickListener(this);
+        btnArmpath = (Button)findViewById(R.id.ns_check_armpath);
+        btnArmpath.setOnClickListener(this);
     }
 
     /* a generic native method to load library */
     private static native boolean nsLoadLib(String lib);
+
+    /* check if *arm* is hiddened under /system/lib and /vendor/lib */
+    private static native String nsScanArmPath();
 
     /* load the native library to work */
     static {
@@ -60,6 +66,9 @@ public class NamespaceActivity extends Activity implements OnClickListener {
             break;
         case R.id.ns_load_greylist_lib:
             retString = verify_library_loading("libandroid_runtime.so", "greylist", true);
+            break;
+        case R.id.ns_check_armpath:
+            retString = nsScanArmPath();
             break;
         default:
             break;

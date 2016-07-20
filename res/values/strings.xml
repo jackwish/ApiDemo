@@ -86,5 +86,6 @@
     <string name="ns_load_public_lib">load Public library</string>
     <string name="ns_load_private_lib">load Non-public library</string>
     <string name="ns_load_greylist_lib">load Greylist library</string>
+    <string name="ns_check_armpath">scan system library path</string>
     <string name="namespace_text">default namespace output text</string>
 </resources>
