@@ -28,7 +28,7 @@ public class SdkActivity extends Activity implements OnClickListener {
         ipcBtn = (Button)findViewById(R.id.ipc_button);
         widgetBtn = (Button)findViewById(R.id.widget_button);
         dataStorageBtn = (Button)findViewById(R.id.datastorage_button);
-        miscBtn = (Button)findViewById(R.id.misc_button);
+        miscBtn = (Button)findViewById(R.id.sdkmisc_button);
         ipcBtn.setOnClickListener(this);
         widgetBtn.setOnClickListener(this);
         dataStorageBtn.setOnClickListener(this);
@@ -50,7 +50,7 @@ public class SdkActivity extends Activity implements OnClickListener {
             Intent datastorageIntent = new Intent(SdkActivity.this, DataStorageActivity.class);
             startActivity(datastorageIntent);
             break;
-        case R.id.misc_button:
+        case R.id.sdkmisc_button:
             Intent miscIntent = new Intent(SdkActivity.this, sdkMiscActivity.class);
             startActivity(miscIntent);
             break;
