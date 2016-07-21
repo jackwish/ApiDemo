@@ -33,7 +33,7 @@
         <activity android:name=".sdk.ipc.DestResultActivity" android:label="@string/activity_destresult" />
         <activity android:name=".sdk.WidgetActivity" android:label="@string/widget_button" />
         <activity android:name=".sdk.DataStorageActivity" android:label="@string/datastorage_button" />
-        <activity android:name=".sdk.sdkMiscActivity" android:label="@string/misc_button" />
+        <activity android:name=".sdk.sdkMiscActivity" android:label="@string/sdkmisc_button" />
 
         <activity android:name=".NdkActivity" android:label="@string/ndk_button" />
         <activity android:name=".ndk.JniActivity" android:label="@string/jni_button" />
