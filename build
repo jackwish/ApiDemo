@@ -9,28 +9,41 @@ if [[ $# -ne 0 ]] && [[ $# -ne 1 ]] && [[ $# -ne 2 ]]; then
     exit -1
 fi
 
-# prepare args
+############################# prepare args ###########################
+
 targetId=android-23
 if [ $# -eq 0 ]; then
     echo "No sdk version provided, use latested: ${targetId}"
     targetId=$(android list target -c -0 | head -n 1)
 fi
+
+ln -sf Application.mk.arm ./jni/Application.mk
+
 if [[ $# -eq 1 ]]; then
-    if [ ${1} == "c" ]; then
+    if [ "${1}" = "c" ]; then
+        # flush
         rm -rf bin/ gen/ libs/ obj/ build.xml local.properties proguard-project.txt  project.properties
         exit 0
+    elif [ "${1}" = "x" -o "${1}" = "x86" ]; then
+        # choose ABI
+        echo "building an x86 package"
+        ln -sf Application.mk.x86 ./jni/Application.mk
+    else
+        # set Sdk version
+        targetId=${1}
     fi
-    targetId=${1}
 fi
 ver=debug
-if [[ $# -eq 2 ]]; then
-    if [[ ${2} -eq 1 ]]; then
+if [ $# -eq 2 ]; then
+    if [ ${2} -eq 1 ]; then
         ver=release
     fi
 fi
 apkName=ApiDemo
 
-# build apk
+
+############################# build apk ##############################
+
 echo
 echo "1. generate build configuration files ..."
 android update project -n ${apkName} -p . -t ${targetId}
@@ -53,7 +66,8 @@ echo "3. build APK ..."
 ant clean
 ant ${ver}
 
-# install
+############################# install ##################################
+
 echo "4. install APK ..."
 echo "----------"
 adb devices | grep -w "device" 1> /dev/null
