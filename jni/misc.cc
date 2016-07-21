@@ -14,39 +14,47 @@ static bool open_wrapper(const char* path)
     if (fd <= 0) {
         if (errno == EACCES) {
             LOGE("fail to open %s! EACCESS - permisson denied", path);
+            return false;
+        } else if (errno == ENOENT) {
+            LOGE("%s doesn't exist!", path);
         } else {
             LOGE("fail to open %s! errno=%d", path, errno);
         }
-        return false;
     } else {
         LOGI("open %s pass, will close", path);
         close(fd);
-        return true;
     }
+    return true;
 }
 
 extern "C" {
 
-JNIEXPORT jboolean JNICALL Java_com_young_ApiDemo_MiscActivity_tryOpenFile(JNIEnv *env, jobject obj)
+JNIEXPORT jstring JNICALL Java_com_young_ApiDemo_MiscActivity_tryOpenFile(JNIEnv *env, jobject obj)
 {
     const char* paths[] = {
-        "/data/system",
-        "/data/data",
         "/data",
-        "/sdcard/Download",
+        "/data/data",
+        "/data/system",
         "/sdcard",
+        "/sdcard/Download",
+        "/cache",
+        "/system",
+        "/system/lib",
+        "/vendor",
+        "/vendor/lib",
     };
 
-    bool check = true;
-    char buf[256];
+    std::string ret = "permisson denied paths:";
+    std::string buf;
     for (int i = 0; i < (sizeof(paths) / sizeof(char*)); i++) {
-        memset(buf, '\0', sizeof(buf));
-        snprintf(buf, sizeof(buf), "%s/ubt.config", paths[i]);
-        LOGI("going to check %s", buf);
-        check &= open_wrapper(buf);
+        buf = std::string(paths[i]) + "sample.file";
+        LOGI("going to check %s", buf.c_str());
+        if (open_wrapper(buf.c_str())) {
+            ret = ret + " " + paths[i];
+        }
     }
 
-    return check;
+    return env->NewStringUTF(ret.c_str());
 }
 
 } /* extern "C" */

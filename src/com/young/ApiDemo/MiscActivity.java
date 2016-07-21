@@ -26,7 +26,7 @@ public class MiscActivity extends Activity implements OnClickListener {
     }
 
     /* try open file via native method */
-    private static native boolean tryOpenFile();
+    private static native String tryOpenFile();
 
     /* load the native library to work */
     static {
@@ -38,11 +38,7 @@ public class MiscActivity extends Activity implements OnClickListener {
         String retString = "nothing happened";
         switch (view.getId()) {
         case R.id.open_file:
-            if (tryOpenFile() == true) {
-                retString = "amazing! all file open pass!";
-            } else {
-                retString = "some file open failed, check log for detail";
-            }
+            retString = tryOpenFile();
             break;
         default:
             break;
