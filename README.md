@@ -6,20 +6,20 @@ This project demonstrate a few examples of how to employ Android API, mostly NDK
 The motivation is to have a easy way to verify whether the Native layer of Android system works correctly.
 So, basically, this is a collection of NDK related unit test for Android system developer to use.
 
+
 ## Test Collection
 
-### SDK
+* SDK
+    * Includes IPC, Widget, DataStorage and others.
 
-Includes IPC, Widget, DataStorage and others.
+* NDK
+    * Includes JNI functions, System call and Signal.
 
-### NDK
+* Dynamic Link
+    * Mainly about the Android Nougat feature [namespace], will extend.
 
-Includes JNI functions, System call and Signal.
-
-### Dynamic Link
-
-Mainly about the Android Nougat feature [namespace], will extend.
-
+* Misc
+    * other cases..
 
 
 ## Usage
@@ -40,6 +40,9 @@ The script automatically installs the newly built package.
 * **Specify a SDK version**: `./build android-20`
     * Note: this doesn't change the `target_sdk_version` in `AndroidManifest.xml`. You need to change it by hand :(.
 
+* **build x86 version**: `./build x`
+    * default build is ARM version.
+
 * **Build a release version**: `./build android-20 1`
     * When build a release version, needs to specify SDK version by hand
 
@@ -51,7 +54,8 @@ Just start the application and select the test you need.
 
 ## Backup
 
-Copyright 2014 2015 Mu Weiyang.
+Copyright 2014~2015 Mu Weiyang.
+
 Copyright 2016 WANG Zhenhua.
 
 
