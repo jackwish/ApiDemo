@@ -27,34 +27,56 @@ static bool open_wrapper(const char* path)
     return true;
 }
 
-extern "C" {
-
-JNIEXPORT jstring JNICALL Java_com_young_ApiDemo_MiscActivity_tryOpenFile(JNIEnv *env, jobject obj)
+static bool create_wrapper(const char* path)
 {
-    const char* paths[] = {
-        "/data",
-        "/data/data",
-        "/data/system",
-        "/sdcard",
-        "/sdcard/Download",
-        "/cache",
-        "/system",
-        "/system/lib",
-        "/vendor",
-        "/vendor/lib",
-    };
-
-    std::string ret = "permisson denied paths:";
-    std::string buf;
-    for (int i = 0; i < (sizeof(paths) / sizeof(char*)); i++) {
-        buf = std::string(paths[i]) + "sample.file";
-        LOGI("going to check %s", buf.c_str());
-        if (open_wrapper(buf.c_str())) {
-            ret = ret + " " + paths[i];
+    int fd = creat(path, 666);
+    if (fd <= 0) {
+        if (errno == EACCES) {
+            LOGE("fail to open %s! EACCESS - permisson denied", path);
+            return false;
+        } else {
+            LOGE("fail to open %s! errno=%d", path, errno);
         }
+    } else {
+        LOGI("create %s pass, will delete", path);
+        close(fd);
     }
-
-    return env->NewStringUTF(ret.c_str());
+    return true;
 }
 
-} /* extern "C" */
+const static char* g_paths[] = {
+    "/data",
+    "/data/data",
+    "/data/system",
+    "/sdcard",
+    "/sdcard/Download",
+    "/cache",
+    "/system",
+    "/system/lib",
+    "/vendor",
+    "/vendor/lib",
+};
+
+extern "C" JNIEXPORT jstring JNICALL
+Java_com_young_ApiDemo_MiscActivity_tryOpenFile(JNIEnv *env, jobject obj)
+{
+
+    std::string open_ret = "permisson denied paths(open):";
+    std::string create_ret = "permisson denied paths(create):";
+    std::string all_paths = "all tested paths:";
+    for (int i = 0; i < (sizeof(g_paths) / sizeof(char*)); i++) {
+        std::string buf = std::string(g_paths[i]) + "sample.file";
+        LOGI("going to check %s", buf.c_str());
+        all_paths = all_paths + " " + g_paths[i];
+        if (create_wrapper(buf.c_str())) {
+            create_ret = create_ret + " " + g_paths[i];
+        }
+        if (open_wrapper(buf.c_str())) {
+            open_ret = open_ret + " " + g_paths[i];
+        }
+        unlink(buf.c_str());
+    }
+
+    std::string final_ret = create_ret + "\n" + open_ret + "\n" + all_paths;
+    return env->NewStringUTF(final_ret.c_str());
+}
