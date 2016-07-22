@@ -90,6 +90,6 @@
     <string name="ns_check_armpath">scan system library path</string>
     <string name="namespace_text">default namespace output text</string>
     <!-- res/layout/misc.xml -->
-    <string name="open_file">try open file in directory</string>
+    <string name="open_file">try open/create file</string>
     <string name="misc_text">nothing happened yet</string>
 </resources>
