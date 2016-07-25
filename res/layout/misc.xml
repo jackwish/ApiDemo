@@ -9,10 +9,16 @@
     android:orientation="vertical" >
 
     <Button
-        android:id="@+id/open_file"
+        android:id="@+id/try_create_file_android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/open_file" />
+        android:text="@string/try_create_file_android" />
+
+    <Button
+        android:id="@+id/try_open_file_android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/try_open_file_android" />
 
     <TextView
         android:id="@+id/misc_text"

@@ -54,11 +54,11 @@
     <string name="dc_method_button4">Downcall 4 (fgets callback)</string>
     <string name="dc_method_button5">Downcall 5 (explicit dlopen)</string>
     <string name="dc_method_button6">Downcall 6 (performance test in Java level)</string>
-    <string name="downcall_text">Default: JNI downcall</string>
+    <string name="downcall_text">nothing happened yet</string>
     <!-- res/layout/ndk_jni_downcall_onload.xml -->
     <string name="dco_method_button1">JNIOnload Downcall 1 (simple downcall)</string>
     <string name="dco_method_button2">JNIOnload Downcall 2 (explicit dlopen)</string>
-    <string name="downcall_onload_text">Default: JNIOnload downcall</string>
+    <string name="downcall_onload_text">nothing happened yet</string>
     <!-- res/layout/ndk_jni_upcall.xml -->
     <string name="uc_method_button1">Upcall 1 (simple upcall)</string>
     <string name="uc_method_button2">Upcall 2 (static)</string>
@@ -67,20 +67,20 @@
     <string name="uc_method_button5">Upcall 5 (NewObjectV)</string>
     <string name="uc_method_button6">Upcall 6 (NewObjectA)</string>
     <string name="uc_method_button7">Upcall 7 (performance in C level)</string>
-    <string name="upcall_text">Default: JNI upcall</string>
+    <string name="upcall_text">nothing happened yet</string>
     <!-- res/layout/ndk_jni_invoke.xml -->
     <string name="iv_method_button">Invoke Method (multiple threads)</string>
-    <string name="invoke_text">Default: JNI invoke</string>
+    <string name="invoke_text">nothing happened yet</string>
     <!-- res/layout/ndk_syscall.xml -->
     <string name="sys_method_button1">Syscall 1 (nanosleep)</string>
-    <string name="syscall_text">Default: Syscall Test</string>
+    <string name="syscall_text">nothing happened yet</string>
     <!-- res/layout/ndk_signal.xml -->
     <string name="sig_method_button1">Signal 1 (singal SIGUSR2)</string>
     <string name="sig_method_button2">Signal 2 (tkill SIGUSR2)</string>
     <string name="sig_method_button3">Signal 3 (sigaction SIGSEGV)</string>
     <string name="sig_method_button4">Signal 4 (tkill SIGSEGV)</string>
     <string name="sig_method_button5">Signal 5 (sigsuspend)</string>
-    <string name="signal_text">Default: Signal Test</string>
+    <string name="signal_text">nothing happened yet</string>
     <!-- res/layout/activity_linker.xml -->
     <string name="namespace_button">Namespace</string>
     <!-- res/layout/linker_namespace.xml -->
@@ -88,8 +88,9 @@
     <string name="ns_load_private_lib">load Non-public library</string>
     <string name="ns_load_greylist_lib">load Greylist library</string>
     <string name="ns_check_armpath">scan system library path</string>
-    <string name="namespace_text">default namespace output text</string>
+    <string name="namespace_text">nothing happened yet</string>
     <!-- res/layout/misc.xml -->
-    <string name="open_file">try open/create file</string>
+    <string name="try_create_file_android">try *create* file in JNI</string>
+    <string name="try_open_file_android">try *open* file in JNI</string>
     <string name="misc_text">nothing happened yet</string>
 </resources>
