@@ -4,7 +4,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <errno.h>
- #include <unistd.h>
+#include <unistd.h>
 
 #include <string>
 
@@ -45,24 +45,15 @@ static bool create_wrapper(const char* path)
 }
 
 const static char* g_paths[] = {
-    "/data",
-    "/data/data",
-    "/data/system",
-    "/sdcard",
-    "/sdcard/Download",
-    "/cache",
-    "/system",
-    "/system/lib",
-    "/vendor",
-    "/vendor/lib",
+    #include "sample.path"
 };
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_young_ApiDemo_MiscActivity_tryOpenFile(JNIEnv *env, jobject obj)
+Java_com_young_ApiDemo_MiscActivity_tryCreateFileAndroid(JNIEnv *env, jobject obj)
 {
 
-    std::string open_ret = "permisson denied paths(open):";
     std::string create_ret = "permisson denied paths(create):";
+    std::string open_ret = "permisson denied paths(open, possible invalid results):";
     std::string all_paths = "all tested paths:";
     for (int i = 0; i < (sizeof(g_paths) / sizeof(char*)); i++) {
         std::string buf = std::string(g_paths[i]) + "sample.file";
@@ -77,6 +68,26 @@ Java_com_young_ApiDemo_MiscActivity_tryOpenFile(JNIEnv *env, jobject obj)
         unlink(buf.c_str());
     }
 
-    std::string final_ret = create_ret + "\n" + open_ret + "\n" + all_paths;
+    std::string final_ret = create_ret + "\n\n" + open_ret + "\n\n" + all_paths;
+    return env->NewStringUTF(final_ret.c_str());
+}
+
+extern "C" JNIEXPORT jstring JNICALL
+Java_com_young_ApiDemo_MiscActivity_tryOpenFileAndroid(JNIEnv *env, jobject obj)
+{
+
+    std::string open_ret = "permisson denied paths(open):";
+    std::string all_paths = "all tested paths:";
+    for (int i = 0; i < (sizeof(g_paths) / sizeof(char*)); i++) {
+        std::string buf = std::string(g_paths[i]) + "sample.file";
+        LOGI("going to check %s", buf.c_str());
+        all_paths = all_paths + " " + g_paths[i];
+        if (open_wrapper(buf.c_str())) {
+            open_ret = open_ret + " " + g_paths[i];
+        }
+    }
+
+    std::string final_ret = open_ret + "\n\n" + all_paths +
+        "\n\nNote: make sure sample.file on disk before this test. (use touch-file-on-devices.sh under deck directory)";
     return env->NewStringUTF(final_ret.c_str());
 }
