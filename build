@@ -12,6 +12,7 @@ fi
 ############################# prepare args ###########################
 
 targetId=android-23
+fileHelper=./libs/armeabi/file_helper
 if [ $# -eq 0 ]; then
     echo "No sdk version provided, use latested: ${targetId}"
     targetId=$(android list target -c -0 | head -n 1)
@@ -28,6 +29,7 @@ if [[ $# -eq 1 ]]; then
         # choose ABI
         echo "building an x86 package"
         ln -sf Application.mk.x86 ./jni/Application.mk
+        fileHelper=./libs/x86/file_helper
     else
         # set Sdk version
         targetId=${1}
@@ -64,6 +66,7 @@ fi
 echo
 echo "3. build APK ..."
 ant clean
+cp ${fileHelper} ./assets/
 ant ${ver}
 
 ############################# install ##################################
@@ -79,7 +82,7 @@ if [[ "${ver}" == "debug" ]]; then
     adb install -r bin/${apkName}-debug.apk
 else
     echo ">>> NOTE: type the passowrd as requested: 122333\n"
-    jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my.key bin/${apkName}-${ver}-unsigned.apk test
+    jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ./assets/release.key bin/${apkName}-${ver}-unsigned.apk test
     zipalign -v 4 bin/${apkName}-${ver}-unsigned.apk ${apkName}-signed.apk
     adb install -r ${apkName}-signed.apk
 fi

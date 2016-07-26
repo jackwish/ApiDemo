@@ -57,3 +57,10 @@ LOCAL_MODULE := misc
 LOCAL_SRC_FILES := misc.cc
 LOCAL_LDLIBS := -llog -ldl
 include $(BUILD_SHARED_LIBRARY)
+
+# a standalone binary
+include $(CLEAR_VARS)
+LOCAL_MODULE := file_helper
+LOCAL_SRC_FILES := file_helper.cc
+#LOCAL_LDLIBS := -llog -ldl
+include $(BUILD_EXECUTABLE)
