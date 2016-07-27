@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <libgen.h>
 #include <string.h>
+#include <assert.h>
 
 #include <string>
 
@@ -103,79 +104,102 @@ Java_com_young_ApiDemo_MiscActivity_tryOpenFileAndroid(JNIEnv *env, jobject obj)
     return env->NewStringUTF(final_ret.c_str());
 }
 
-
-extern "C" JNIEXPORT jstring JNICALL
-Java_com_young_ApiDemo_MiscActivity_tryCreateFileStandalone(JNIEnv *env, jobject obj, jstring path)
+static std::string fork_and_exec_helper(const char* helper_path /* exe */,
+                                        const char* result_path /* arg1 */,
+                                        const char* operation /* arg2 */)
 {
-    char denied[4096] = { '\0' };
-    std::string final_ret = "in tryCreateFileAndroid() native method";
-    std::string fail_ret = "in tryCreateFileAndroid() native method";
-    std::string ret_file = "myfilehelper.result";
-    const char* helper_path = env->GetStringUTFChars(path, NULL);
-    if (helper_path == NULL) {
-        LOGE("fail to convert jstring to char*");
-        return JNI_FALSE;
-    }
-    char* result_path = new char[strlen(helper_path) + ret_file.size()];
-    strncpy(result_path, helper_path, strlen(helper_path));
-    char* p = strrchr(result_path, '/');
-    if (p != NULL) {
-        strncpy(p, ret_file.c_str(), ret_file.size());
-    } else {
-        LOGE("file helper path could be wrong: %s", helper_path);
-    }
-
+    std::string empty_str;
     // fork $ exec
     LOGI("forking process to execute %s", helper_path);
     pid_t cpid = fork();
     if (cpid == 0) {
         // child process
         LOGI("in child process, executing %s", helper_path);
-        char* myargv[] = { (char*)helper_path, result_path, NULL };
+        char* myargv[] = { (char*)helper_path, (char*)result_path, (char*)operation, NULL };
         if (execve(helper_path, myargv, NULL) == -1) {
-            fail_ret = "exec fail";
-            goto fail;
+            return std::string("exec fail");
         }
     } else if (cpid == -1) {
         // fork fail
-        fail_ret = "fail to fork in tryCreateFileAndroid()";
-        goto fail;
+        return std::string("fail to fork in tryCreateFileAndroid()");
     }
 
     // wait for child process
-    int fd;
     LOGI("in parent process, waiting for child process: %d", cpid);
     int child_status;
     waitpid(cpid, &child_status, 0);
     if (WIFEXITED(child_status)) {
-        LOGI("child process finished, going to collecting result");
+        LOGI("child process finished");
     } else {
         char buf[64] = { '\0' };
         snprintf(buf, 63, "%d", child_status);
-        fail_ret = "child process finished unexpected, status: " + std::string(buf);
-        goto fail;
+        return (std::string("child process finished unexpected, status: ") + std::string(buf));
     }
+    return empty_str;
+}
 
-    // dump result.txt
+static bool dump_result(std::string result_path,
+                        std::string &dumped_ret,
+                        std::string &fail_ret)
+{
     // expect - result file contains a string of directories which is permission denied.
-    fd = open(result_path, O_RDONLY);
+    char denied[4096] = { '\0' };
+    int fd = open(result_path.c_str(), O_RDONLY);
     if (fd <= 0) {
         char buf[64] = { '\0' };
         snprintf(buf, 63, "\", errno: %d", errno);
-        fail_ret = "fail to open \"" + std::string(result_path) + std::string(buf);
-        goto fail;
+        fail_ret = "fail to open \"" + result_path + std::string(buf);
+        return false;
     }
     if (read(fd, denied, 4096) == -1) {
         char buf[64] = { '\0' };
         snprintf(buf, 63, "\", errno: %d", errno);
-        fail_ret = "fail to read \"" + std::string(result_path) + std::string(buf);
-        goto fail;
+        fail_ret = "fail to read \"" + result_path + std::string(buf);
+        return false;
     }
     close(fd);
-    LOGI("readed (permisson denied paths) \"%s\" from %s", denied, result_path);
+    dumped_ret = std::string(denied);
+    return true;
+}
+
+static std::string gen_result_path(const char* helper_path)
+{
+    const char ret_file[] = "myfilehelper.result";
+    char* result_path = new char[strlen(helper_path) + sizeof(ret_file)];
+    strncpy(result_path, helper_path, strlen(helper_path));
+    char* p = strrchr(result_path, '/');
+    if (p != NULL) {
+        strcpy(p, ret_file);
+    } else {
+        LOGE("file helper path could be wrong: %s", helper_path);
+    }
+    return std::string(result_path);
+}
+
+extern "C" JNIEXPORT jstring JNICALL
+Java_com_young_ApiDemo_MiscActivity_tryCreateFileStandalone(JNIEnv *env, jobject obj, jstring path)
+{
+    std::string final_ret = "in tryCreateFileAndroid() native method";
+    const char* helper_path = env->GetStringUTFChars(path, NULL);
+    if (helper_path == NULL) {
+        LOGE("fail to convert jstring to char*");
+        return JNI_FALSE;
+    }
+
+    std::string denied;
+    std::string result_path = gen_result_path(helper_path);
+    std::string fail_ret = fork_and_exec_helper(helper_path, result_path.c_str(), "create");
+    if (fail_ret.size() > 1) {
+        goto fail;
+    }
+    LOGI("file helper exec done, now collect result");
+    if (dump_result(result_path, denied, fail_ret) == false) {
+        goto fail;
+    }
+    LOGI("readed (permisson denied paths) \"%s\" from %s", denied.c_str(), result_path.c_str());
 
     // everything ok, now return
-    final_ret = std::string(denied) + "\n\n" + gen_all_paths();
+    final_ret = denied + "\n\n" + gen_all_paths();
 
     env->ReleaseStringUTFChars(path, helper_path);
     return env->NewStringUTF(final_ret.c_str());
@@ -185,3 +209,6 @@ fail:
     env->ReleaseStringUTFChars(path, helper_path);
     return env->NewStringUTF(fail_ret.c_str());
 }
+
+
+
