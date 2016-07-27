@@ -1,4 +1,5 @@
 #include "_log.h"
+#include "file_op_wrapper.h"
 #include <jni.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -12,44 +13,9 @@
 
 #include <string>
 
-static bool open_wrapper(const char* path)
-{
-    int fd = open(path, O_RDONLY);
-    if (fd <= 0) {
-        if (errno == EACCES) {
-            LOGE("fail to open %s! EACCESS - permisson denied", path);
-            return false;
-        } else if (errno == ENOENT) {
-            LOGE("%s doesn't exist!", path);
-        } else {
-            LOGE("fail to open %s! errno=%d", path, errno);
-        }
-    } else {
-        LOGI("open %s pass, will close", path);
-        close(fd);
-    }
-    return true;
-}
-
-static bool create_wrapper(const char* path)
-{
-    int fd = creat(path, 666);
-    if (fd <= 0) {
-        if (errno == EACCES) {
-            LOGE("fail to open %s! EACCESS - permisson denied", path);
-            return false;
-        } else {
-            LOGE("fail to open %s! errno=%d", path, errno);
-        }
-    } else {
-        LOGI("create %s pass, will delete", path);
-        close(fd);
-    }
-    return true;
-}
 
 const static char* g_paths[] = {
-    #include "sample.path"
+    #include "sample_path.h"
 };
 
 static std::string gen_all_paths()
@@ -104,9 +70,10 @@ Java_com_young_ApiDemo_MiscActivity_tryOpenFileAndroid(JNIEnv *env, jobject obj)
     return env->NewStringUTF(final_ret.c_str());
 }
 
-static std::string fork_and_exec_helper(const char* helper_path /* exe */,
-                                        const char* result_path /* arg1 */,
-                                        const char* operation /* arg2 */)
+static bool fork_and_exec_helper(const char* helper_path /* exe */,
+                                 std::string result_path /* arg1 */,
+                                 const char* operation /* arg2 */,
+                                 std::string &retstr)
 {
     std::string empty_str;
     // fork $ exec
@@ -115,13 +82,18 @@ static std::string fork_and_exec_helper(const char* helper_path /* exe */,
     if (cpid == 0) {
         // child process
         LOGI("in child process, executing %s", helper_path);
-        char* myargv[] = { (char*)helper_path, (char*)result_path, (char*)operation, NULL };
-        if (execve(helper_path, myargv, NULL) == -1) {
-            return std::string("exec fail");
-        }
+        char* myargv[] = {
+            (char*)helper_path,
+            (char*)result_path.c_str(),
+            (char*)operation,
+            NULL,
+        };
+        execve(helper_path, myargv, NULL);
+        return true; // child process, not execuated actually.
     } else if (cpid == -1) {
         // fork fail
-        return std::string("fail to fork in tryCreateFileAndroid()");
+        retstr = "fail to fork when test " + std::string(operation);
+        return false;
     }
 
     // wait for child process
@@ -133,9 +105,10 @@ static std::string fork_and_exec_helper(const char* helper_path /* exe */,
     } else {
         char buf[64] = { '\0' };
         snprintf(buf, 63, "%d", child_status);
-        return (std::string("child process finished unexpected, status: ") + std::string(buf));
+        retstr = "child process finished unexpected, status: " + std::string(buf);
+        return false;
     }
-    return empty_str;
+    return true;
 }
 
 static bool dump_result(std::string result_path,
@@ -161,18 +134,20 @@ static bool dump_result(std::string result_path,
     return true;
 }
 
-static std::string gen_result_path(const char* helper_path)
+static bool gen_result_path(const char* helper_path, std::string &result_path)
 {
-    const char ret_file[] = "myfilehelper.result";
-    char* result_path = new char[strlen(helper_path) + sizeof(ret_file)];
-    strncpy(result_path, helper_path, strlen(helper_path));
-    char* p = strrchr(result_path, '/');
+    result_path = "myfilehelper.result";
+    char* buf = new char[strlen(helper_path) + 2];
+    strncpy(buf, helper_path, strlen(helper_path));
+    char* p = strrchr(buf, '/');
     if (p != NULL) {
-        strcpy(p, ret_file);
+        *p = '\0';
     } else {
-        LOGE("file helper path could be wrong: %s", helper_path);
+        result_path = "file helper path could be wrong: " + std::string(helper_path);
+        return false;
     }
-    return std::string(result_path);
+    result_path = std::string(buf) + result_path;
+    return true;
 }
 
 static std::string standalone_file_test_core(JNIEnv *env,
@@ -183,26 +158,25 @@ static std::string standalone_file_test_core(JNIEnv *env,
     std::string retstr, result_path;
     if (helper_path == NULL) {
         retstr = "fail to convert jstring to char*";
-        LOGE("%s", retstr.c_str());
         goto done;
     }
 
-    result_path = gen_result_path(helper_path);
-    retstr = fork_and_exec_helper(helper_path, result_path.c_str(), operation);
-    if (retstr.size() > 1) {
-        LOGE("%s", retstr.c_str());
+    if (gen_result_path(helper_path, result_path) == false) {
+        retstr = result_path;
         goto done;
-
     }
-
+    LOGI("generated result path: %s, begin to run test", result_path.c_str());
+    if (fork_and_exec_helper(helper_path, result_path, operation, retstr) == false) {
+        goto done;
+    }
     LOGI("file helper exec done, now collect result");
     if (dump_result(result_path, retstr) == false) {
         LOGE("%s", retstr.c_str());
         goto done;
     }
     retstr += "\n\n" + gen_all_paths();
-    LOGI("%s", retstr.c_str());
 done:
+    LOGI("%s", retstr.c_str());
     env->ReleaseStringUTFChars(path, helper_path);
     return retstr;
 }

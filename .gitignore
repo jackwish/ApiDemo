@@ -2,6 +2,7 @@ bin/
 gen/
 obj/
 libs/
+assets/
 build.xml
 local.properties
 project.properties
