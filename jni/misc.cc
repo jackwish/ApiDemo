@@ -139,8 +139,7 @@ static std::string fork_and_exec_helper(const char* helper_path /* exe */,
 }
 
 static bool dump_result(std::string result_path,
-                        std::string &dumped_ret,
-                        std::string &fail_ret)
+                        std::string &retstr)
 {
     // expect - result file contains a string of directories which is permission denied.
     char denied[4096] = { '\0' };
@@ -148,17 +147,17 @@ static bool dump_result(std::string result_path,
     if (fd <= 0) {
         char buf[64] = { '\0' };
         snprintf(buf, 63, "\", errno: %d", errno);
-        fail_ret = "fail to open \"" + result_path + std::string(buf);
+        retstr = "fail to open \"" + result_path + std::string(buf);
         return false;
     }
     if (read(fd, denied, 4096) == -1) {
         char buf[64] = { '\0' };
         snprintf(buf, 63, "\", errno: %d", errno);
-        fail_ret = "fail to read \"" + result_path + std::string(buf);
+        retstr = "fail to read \"" + result_path + std::string(buf);
         return false;
     }
     close(fd);
-    dumped_ret = std::string(denied);
+    retstr = std::string(denied);
     return true;
 }
 
@@ -176,39 +175,52 @@ static std::string gen_result_path(const char* helper_path)
     return std::string(result_path);
 }
 
+static std::string standalone_file_test_core(JNIEnv *env,
+                                             jstring path,
+                                             const char* operation)
+{
+    const char* helper_path = env->GetStringUTFChars(path, NULL);
+    std::string retstr, result_path;
+    if (helper_path == NULL) {
+        retstr = "fail to convert jstring to char*";
+        LOGE("%s", retstr.c_str());
+        goto done;
+    }
+
+    result_path = gen_result_path(helper_path);
+    retstr = fork_and_exec_helper(helper_path, result_path.c_str(), operation);
+    if (retstr.size() > 1) {
+        LOGE("%s", retstr.c_str());
+        goto done;
+
+    }
+
+    LOGI("file helper exec done, now collect result");
+    if (dump_result(result_path, retstr) == false) {
+        LOGE("%s", retstr.c_str());
+        goto done;
+    }
+    retstr += "\n\n" + gen_all_paths();
+    LOGI("%s", retstr.c_str());
+done:
+    env->ReleaseStringUTFChars(path, helper_path);
+    return retstr;
+}
+
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_young_ApiDemo_MiscActivity_tryCreateFileStandalone(JNIEnv *env, jobject obj, jstring path)
 {
-    std::string final_ret = "in tryCreateFileAndroid() native method";
-    const char* helper_path = env->GetStringUTFChars(path, NULL);
-    if (helper_path == NULL) {
-        LOGE("fail to convert jstring to char*");
-        return JNI_FALSE;
-    }
-
-    std::string denied;
-    std::string result_path = gen_result_path(helper_path);
-    std::string fail_ret = fork_and_exec_helper(helper_path, result_path.c_str(), "create");
-    if (fail_ret.size() > 1) {
-        goto fail;
-    }
-    LOGI("file helper exec done, now collect result");
-    if (dump_result(result_path, denied, fail_ret) == false) {
-        goto fail;
-    }
-    LOGI("readed (permisson denied paths) \"%s\" from %s", denied.c_str(), result_path.c_str());
-
-    // everything ok, now return
-    final_ret = denied + "\n\n" + gen_all_paths();
-
-    env->ReleaseStringUTFChars(path, helper_path);
-    return env->NewStringUTF(final_ret.c_str());
-
-fail:
-    LOGE("%s", fail_ret.c_str());
-    env->ReleaseStringUTFChars(path, helper_path);
-    return env->NewStringUTF(fail_ret.c_str());
+    LOGI("in tryCreateFileAndroid() native method");
+    std::string ret = standalone_file_test_core(env, path, "create");
+    return env->NewStringUTF(ret.c_str());
 }
 
 
+extern "C" JNIEXPORT jstring JNICALL
+Java_com_young_ApiDemo_MiscActivity_tryOpenFileStandalone(JNIEnv *env, jobject obj, jstring path)
+{
+    LOGI("in tryOpenFileAndroid() native method");
+    std::string ret = standalone_file_test_core(env, path, "open");
+    return env->NewStringUTF(ret.c_str());
+}
 
