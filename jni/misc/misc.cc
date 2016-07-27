@@ -13,6 +13,8 @@
 
 #include <string>
 
+#define OPEN_TIPS \
+        "\n\nNote: make sure sample.file on disk before this test. (use touch-file-on-devices.sh under assets directory)"
 
 const static char* g_paths[] = {
     #include "sample_path.h"
@@ -65,8 +67,7 @@ Java_com_young_ApiDemo_MiscActivity_tryOpenFileAndroid(JNIEnv *env, jobject obj)
         }
     }
 
-    std::string final_ret = open_ret + "\n\n" + gen_all_paths() +
-        "\n\nNote: make sure sample.file on disk before this test. (use touch-file-on-devices.sh under assets directory)";
+    std::string final_ret = open_ret + "\n\n" + gen_all_paths() + OPEN_TIPS;
     return env->NewStringUTF(final_ret.c_str());
 }
 
@@ -175,6 +176,9 @@ static std::string standalone_file_test_core(JNIEnv *env,
         goto done;
     }
     retstr += "\n\n" + gen_all_paths();
+    if (strcmp(operation, "open") == 0) {
+        retstr += OPEN_TIPS;
+    }
 done:
     LOGI("%s", retstr.c_str());
     env->ReleaseStringUTFChars(path, helper_path);
