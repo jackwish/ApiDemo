@@ -7,7 +7,7 @@
 
 extern "C" {
 
-JNIEXPORT jboolean JNICALL Java_com_young_ApiDemo_linker_NamespaceActivity_nsLoadLib(JNIEnv *env, jobject obj, jstring lib)
+JNIEXPORT jboolean JNICALL Java_com_young_ApiDemo_LinkerActivity_nsLoadLib(JNIEnv *env, jobject obj, jstring lib)
 {
     const char* libname = env->GetStringUTFChars(lib, NULL);
     if (libname == NULL) {
@@ -66,7 +66,7 @@ static void scan_for_dir(scan_path* path)
 
 extern "C" {
 
-JNIEXPORT jstring JNICALL Java_com_young_ApiDemo_linker_NamespaceActivity_nsScanArmPath(JNIEnv *env, jobject obj)
+JNIEXPORT jstring JNICALL Java_com_young_ApiDemo_LinkerActivity_nsScanArmPath(JNIEnv *env, jobject obj)
 {
     scan_path sys = {"/system/lib", "arm", false, false};
     scan_for_dir(&sys);

@@ -9,9 +9,33 @@
     android:orientation="vertical" >
 
     <Button
-        android:id="@+id/namespace_button"
+        android:id="@+id/ns_load_public_lib"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/namespace_button" />
+        android:text="@string/ns_load_public_lib" />
+
+    <Button
+        android:id="@+id/ns_load_private_lib"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ns_load_private_lib" />
+
+    <Button
+        android:id="@+id/ns_load_greylist_lib"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ns_load_greylist_lib" />
+
+    <Button
+        android:id="@+id/ns_check_armpath"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ns_check_armpath" />
+
+    <TextView
+        android:id="@+id/linker_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/default_text" />
 
 </LinearLayout>

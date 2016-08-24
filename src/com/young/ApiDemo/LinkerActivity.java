@@ -1,38 +1,78 @@
 package com.young.ApiDemo;
 
-import com.young.ApiDemo.linker.NamespaceActivity;
+import com.young.ApiDemo.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.content.Intent;
+import android.widget.TextView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class LinkerActivity extends Activity implements OnClickListener {
-    private static final String TAG = "linker test";
-    private Button jniBtn;
-    private Button namespaceBtn;
+    private static final String TAG = "ApiDemo";
+    private TextView LinkerTxt;
+    private Button btnPublic;
+    private Button btnPrivate;
+    private Button btnGreylist;
+    private Button btnArmpath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.linker);
-        Log.i(TAG, "enter Linker Activity");
+        // get textview
+        LinkerTxt = (TextView)findViewById(R.id.linker_text);
         // get buttons and set listeners
-        namespaceBtn = (Button)findViewById(R.id.namespace_button);
-        namespaceBtn.setOnClickListener(this);
+        btnPublic = (Button)findViewById(R.id.ns_load_public_lib);
+        btnPublic.setOnClickListener(this);
+        btnPrivate = (Button)findViewById(R.id.ns_load_private_lib);
+        btnPrivate.setOnClickListener(this);
+        btnGreylist = (Button)findViewById(R.id.ns_load_greylist_lib);
+        btnGreylist.setOnClickListener(this);
+        btnArmpath = (Button)findViewById(R.id.ns_check_armpath);
+        btnArmpath.setOnClickListener(this);
+    }
+
+    /* a generic native method to load library */
+    private static native boolean nsLoadLib(String lib);
+
+    /* check if *arm* is hiddened under /system/lib and /vendor/lib */
+    private static native String nsScanArmPath();
+
+    /* load the native library to work */
+    static {
+        System.loadLibrary("namespace");
+    }
+
+    private String verify_library_loading(String lib, String type, boolean expect)
+    {
+        Log.i(TAG, "going to load " + type + " library \"" + lib + "\" to verify - if namespace based dynamic link works");
+        boolean loaded = nsLoadLib(lib);
+        return (loaded == expect) ? (type + " library \"" + lib + "\" load pass - namespace works") :
+            (type + " library \"" + lib + "\" load pass - namespace doesn't work");
     }
 
     @Override
     public void onClick(View view) {
+        String retString = "nothing";
         switch (view.getId()) {
-        case R.id.namespace_button:
-            Intent namespaceIntent = new Intent(LinkerActivity.this, NamespaceActivity.class);
-            startActivity(namespaceIntent);
+        case R.id.ns_load_public_lib:
+            retString = verify_library_loading("libandroid.so", "public", true);
+            break;
+        case R.id.ns_load_private_lib:
+            retString = verify_library_loading("libhardware.so", "private", false);
+            break;
+        case R.id.ns_load_greylist_lib:
+            retString = verify_library_loading("libandroid_runtime.so", "greylist", true);
+            break;
+        case R.id.ns_check_armpath:
+            retString = nsScanArmPath();
             break;
         default:
             break;
         }
+        Log.i(TAG, retString);
+        LinkerTxt.setText(retString);
     }
 }

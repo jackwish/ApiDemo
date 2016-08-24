@@ -23,6 +23,6 @@
         android:id="@+id/downcall_onload_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/downcall_onload_text" />
+        android:text="@string/default_text" />
 
 </LinearLayout>
