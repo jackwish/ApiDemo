@@ -59,6 +59,6 @@
         android:id="@+id/signal_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/signal_text" />
+        android:text="@string/default_text" />
 
 </LinearLayout>

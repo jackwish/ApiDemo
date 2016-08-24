@@ -46,7 +46,6 @@
         <activity android:name=".ndk.SignalActivity" android:label="@string/signal_button" />
 
         <activity android:name=".LinkerActivity" android:label="@string/linker_button" />
-        <activity android:name=".linker.NamespaceActivity" android:label="@string/namespace_button" />
 
         <activity android:name=".MiscActivity" android:label="@string/misc_button" />
 

@@ -36,6 +36,6 @@
         android:id="@+id/misc_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/misc_text" />
+        android:text="@string/default_text" />
 
 </LinearLayout>
