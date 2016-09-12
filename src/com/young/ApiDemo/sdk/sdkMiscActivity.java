@@ -20,9 +20,13 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.telephony.TelephonyManager;
+import android.location.LocationManager;
+import android.location.LocationProvider;
+import android.provider.Settings;
 import dalvik.system.DexClassLoader;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
+import android.widget.Toast;
 
 public class sdkMiscActivity extends Activity implements OnClickListener {
     private static final String TAG = "ApiDemo";
@@ -31,6 +35,7 @@ public class sdkMiscActivity extends Activity implements OnClickListener {
     private Button appDirBtn;
     private Button classLoaderBtn;
     private Button systemServiceBtn;
+    private Button gpsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +48,13 @@ public class sdkMiscActivity extends Activity implements OnClickListener {
         appDirBtn = (Button)findViewById(R.id.app_directory_button);
         classLoaderBtn = (Button)findViewById(R.id.classloader_button);
         systemServiceBtn = (Button)findViewById(R.id.systemservice_button);
+        gpsBtn = (Button)findViewById(R.id.gps_button);
         abiBtn.setOnClickListener(this);
         envDirBtn.setOnClickListener(this);
         appDirBtn.setOnClickListener(this);
         classLoaderBtn.setOnClickListener(this);
         systemServiceBtn.setOnClickListener(this);
+        gpsBtn.setOnClickListener(this);
     }
 
     public void getSystemABI() {
@@ -146,6 +153,25 @@ public class sdkMiscActivity extends Activity implements OnClickListener {
         }
     }
 
+    public void getGpsStatus() {
+        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        Log.i(TAG, "all location providers: " + lm.getAllProviders().toString());
+        if (lm.getAllProviders().contains(android.location.LocationManager.GPS_PROVIDER)) {
+            String b = lm.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER) ? "YES" : "NO";
+            Log.i(TAG, "device has GPS, app's permission to it? - " + b);
+            while (!lm.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
+                Log.i(TAG, "please grant the location access to GPS!");
+                Toast.makeText(this, "device has GPS, please grant the location access", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_SETTINGS);
+                startActivityForResult(intent, 0);
+            }
+            b = (lm.getProvider(android.location.LocationManager.GPS_PROVIDER) != null) ? "YES" : "NO";
+            Log.i(TAG, "app got the GPS controller? - " + b);
+        } else {
+            Log.i(TAG, "device does NOT have GPS!");
+        }
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -163,6 +189,10 @@ public class sdkMiscActivity extends Activity implements OnClickListener {
             break;
         case R.id.systemservice_button:
             getSystemServiceInfo();
+            break;
+        case R.id.gps_button:
+            getGpsStatus();
+            break;
         default:
             break;
         }

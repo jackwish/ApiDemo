@@ -39,6 +39,7 @@
     <string name="app_directory_button">Application Dirtectory</string>
     <string name="classloader_button">Customed ClassLoader</string>
     <string name="systemservice_button">System Service</string>
+    <string name="gps_button">GPS</string>
     <!-- res/layout/activity_ndk.xml -->
     <string name="jni_button">JNI</string>
     <string name="signal_button">Signal</string>
