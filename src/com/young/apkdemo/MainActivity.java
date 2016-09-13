@@ -1,4 +1,4 @@
-package com.young.ApiDemo;
+package com.young.apkdemo;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class MainActivity extends Activity implements OnClickListener {
-    private static final String TAG = "ApiDemo";
+    private static final String TAG = "apkdemo";
     private Button sdkBtn;
     private Button ndkBtn;
     private Button linkerBtn;

@@ -1,14 +1,14 @@
-package com.young.ApiDemo.sdk.ipc;
+package com.young.apkdemo.sdk.ipc;
 
 import java.lang.InterruptedException;
-import com.young.ApiDemo.R;
+import com.young.apkdemo.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.content.Intent;
 
 public class DestResultActivity extends Activity {
-    private static final String TAG = "ApiDemo";
+    private static final String TAG = "apkdemo";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

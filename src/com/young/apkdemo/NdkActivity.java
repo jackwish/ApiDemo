@@ -1,8 +1,8 @@
-package com.young.ApiDemo;
+package com.young.apkdemo;
 
-import com.young.ApiDemo.ndk.JniActivity;
-import com.young.ApiDemo.ndk.SyscallActivity;
-import com.young.ApiDemo.ndk.SignalActivity;
+import com.young.apkdemo.ndk.JniActivity;
+import com.young.apkdemo.ndk.SyscallActivity;
+import com.young.apkdemo.ndk.SignalActivity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class NdkActivity extends Activity implements OnClickListener {
-    private static final String TAG = "ApiDemo";
+    private static final String TAG = "apkdemo";
     private Button jniBtn;
     private Button syscallBtn;
     private Button signalBtn;

@@ -1,7 +1,7 @@
-package com.young.ApiDemo.sdk;
+package com.young.apkdemo.sdk;
 
-import com.young.ApiDemo.sdk.ipc.ActivityActivity;
-import com.young.ApiDemo.R;
+import com.young.apkdemo.sdk.ipc.ActivityActivity;
+import com.young.apkdemo.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class IpcActivity extends Activity implements OnClickListener {
-    private static final String TAG = "ApiDemo";
+    private static final String TAG = "apkdemo";
     private Button activityBtn;
     private Button serviceBtn;
     private Button contentProviderBtn;

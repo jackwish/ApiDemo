@@ -1,6 +1,6 @@
-package com.young.ApiDemo.ndk.jni;
+package com.young.apkdemo.ndk.jni;
 
-import com.young.ApiDemo.R;
+import com.young.apkdemo.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.FileOutputStream;
 
 public class DowncallActivity extends Activity implements OnClickListener {
-    private static final String TAG = "ApiDemo";
+    private static final String TAG = "apkdemo";
     private TextView downcallTxt;
     private Button simpleDowncallBtn;
     private Button paramTestBtn;

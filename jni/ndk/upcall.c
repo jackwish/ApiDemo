@@ -3,12 +3,12 @@
 #include <jni.h>
 #include <sys/time.h>
 
-jint Java_com_young_ApiDemo_ndk_jni_UpcallActivity_downcallMtd1(JNIEnv *env, jobject obj) {
+jint Java_com_young_apkdemo_ndk_jni_UpcallActivity_downcallMtd1(JNIEnv *env, jobject obj) {
     jint version = (*env)->GetVersion(env);
     return version;
 }
 
-jstring Java_com_young_ApiDemo_ndk_jni_UpcallActivity_downcallMtd2(JNIEnv *env, jobject obj) {
+jstring Java_com_young_apkdemo_ndk_jni_UpcallActivity_downcallMtd2(JNIEnv *env, jobject obj) {
     LOGI("enter downcall [%s]", __func__);
 
     // get class
@@ -33,12 +33,12 @@ jstring Java_com_young_ApiDemo_ndk_jni_UpcallActivity_downcallMtd2(JNIEnv *env, 
     return (jstring)(*env)->CallStaticObjectMethod(env, clazz, staticUpcall, jparam);
 }
 
-jstring Java_com_young_ApiDemo_ndk_jni_UpcallActivity_downcallMtd3(JNIEnv *env, jobject obj) {
+jstring Java_com_young_apkdemo_ndk_jni_UpcallActivity_downcallMtd3(JNIEnv *env, jobject obj) {
     LOGI("enter downcall [%s]", __func__);
 
     // get class
     jclass clazz;
-    clazz = (*env)->FindClass(env, "com/young/ApiDemo/ndk/jni/UpcallActivity");
+    clazz = (*env)->FindClass(env, "com/young/apkdemo/ndk/jni/UpcallActivity");
     if (clazz == NULL) {
         LOGE("FindClass failed!");
         return NULL;
@@ -84,13 +84,13 @@ jstring Java_com_young_ApiDemo_ndk_jni_UpcallActivity_downcallMtd3(JNIEnv *env, 
 }
 
 // NewObject
-jint Java_com_young_ApiDemo_ndk_jni_UpcallActivity_downcallMtd4(JNIEnv *env, jobject obj)
+jint Java_com_young_apkdemo_ndk_jni_UpcallActivity_downcallMtd4(JNIEnv *env, jobject obj)
 {
     LOGI("enter downcall [%s]", __func__);
 
     // get class
     jclass clazz;
-    clazz = (*env)->FindClass(env, (char*)"com/young/ApiDemo/ndk/jni/testClass");
+    clazz = (*env)->FindClass(env, (char*)"com/young/apkdemo/ndk/jni/testClass");
     if (clazz == NULL) {
         LOGE("FindClass failed!");
         return -1;
@@ -123,13 +123,13 @@ jint Java_com_young_ApiDemo_ndk_jni_UpcallActivity_downcallMtd4(JNIEnv *env, job
 }
 
 // NewObjectV
-jint Java_com_young_ApiDemo_ndk_jni_UpcallActivity_downcallMtd5(JNIEnv *env, jobject obj, ...)
+jint Java_com_young_apkdemo_ndk_jni_UpcallActivity_downcallMtd5(JNIEnv *env, jobject obj, ...)
 {
     LOGI("enter downcall [%s]", __func__);
 
     // get class
     jclass clazz;
-    clazz = (*env)->FindClass(env, (char*)"com/young/ApiDemo/ndk/jni/testClass");
+    clazz = (*env)->FindClass(env, (char*)"com/young/apkdemo/ndk/jni/testClass");
     if (clazz == NULL) {
         LOGE("FindClass failed!");
         return -1;
@@ -165,13 +165,13 @@ jint Java_com_young_ApiDemo_ndk_jni_UpcallActivity_downcallMtd5(JNIEnv *env, job
 }
 
 // NewObjectA
-jint Java_com_young_ApiDemo_ndk_jni_UpcallActivity_downcallMtd6(JNIEnv *env, jobject obj)
+jint Java_com_young_apkdemo_ndk_jni_UpcallActivity_downcallMtd6(JNIEnv *env, jobject obj)
 {
     LOGI("enter downcall [%s]", __func__);
 
     // get class
     jclass clazz;
-    clazz = (*env)->FindClass(env, (char*)"com/young/ApiDemo/ndk/jni/testClass");
+    clazz = (*env)->FindClass(env, (char*)"com/young/apkdemo/ndk/jni/testClass");
     if (clazz == NULL) {
         LOGE("FindClass failed!");
         return -1;
@@ -205,7 +205,7 @@ jint Java_com_young_ApiDemo_ndk_jni_UpcallActivity_downcallMtd6(JNIEnv *env, job
     return initVal;
 }
 
-jfloat Java_com_young_ApiDemo_ndk_jni_UpcallActivity_downcallMtd7(JNIEnv *env, jobject obj)
+jfloat Java_com_young_apkdemo_ndk_jni_UpcallActivity_downcallMtd7(JNIEnv *env, jobject obj)
 {
     LOGI("enter downcall [%s]", __func__);
 

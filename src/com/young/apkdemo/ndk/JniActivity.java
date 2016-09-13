@@ -1,10 +1,10 @@
-package com.young.ApiDemo.ndk;
+package com.young.apkdemo.ndk;
 
-import com.young.ApiDemo.R;
-import com.young.ApiDemo.ndk.jni.DowncallActivity;
-import com.young.ApiDemo.ndk.jni.DowncallOnloadActivity;
-import com.young.ApiDemo.ndk.jni.UpcallActivity;
-import com.young.ApiDemo.ndk.jni.InvokeActivity;
+import com.young.apkdemo.R;
+import com.young.apkdemo.ndk.jni.DowncallActivity;
+import com.young.apkdemo.ndk.jni.DowncallOnloadActivity;
+import com.young.apkdemo.ndk.jni.UpcallActivity;
+import com.young.apkdemo.ndk.jni.InvokeActivity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class JniActivity extends Activity implements OnClickListener {
-    private static final String TAG = "ApiDemo";
+    private static final String TAG = "apkdemo";
     private Button downcallBtn;
     private Button downcallOnloadBtn;
     private Button upcallBtn;

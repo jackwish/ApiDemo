@@ -1,6 +1,6 @@
-package com.young.ApiDemo.sdk;
+package com.young.apkdemo.sdk;
 
-import com.young.ApiDemo.R;
+import com.young.apkdemo.R;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
@@ -29,7 +29,7 @@ import java.lang.reflect.InvocationTargetException;
 import android.widget.Toast;
 
 public class sdkMiscActivity extends Activity implements OnClickListener {
-    private static final String TAG = "ApiDemo";
+    private static final String TAG = "apkdemo";
     private Button abiBtn;
     private Button envDirBtn;
     private Button appDirBtn;
