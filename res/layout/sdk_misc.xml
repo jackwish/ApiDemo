@@ -44,4 +44,10 @@
         android:layout_height="wrap_content"
         android:text="@string/gps_button" />
 
+    <TextView
+        android:id="@+id/sdk_misc_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/default_text" />
+
 </LinearLayout>

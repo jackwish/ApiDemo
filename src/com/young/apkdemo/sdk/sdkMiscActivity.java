@@ -13,6 +13,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.os.Build;
 import android.os.Environment;
 import android.content.pm.PackageManager;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 
 public class sdkMiscActivity extends Activity implements OnClickListener {
     private static final String TAG = "apkdemo";
+    private TextView miscTxt;
     private Button abiBtn;
     private Button envDirBtn;
     private Button appDirBtn;
@@ -42,6 +44,8 @@ public class sdkMiscActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sdk_misc);
         Log.i(TAG, "enter SDK Misc Activity");
+        // get textview
+        miscTxt = (TextView)findViewById(R.id.sdk_misc_text);
         // get buttons and set listeners
         abiBtn = (Button)findViewById(R.id.abi_button);
         envDirBtn = (Button)findViewById(R.id.env_directory_button);
@@ -57,39 +61,61 @@ public class sdkMiscActivity extends Activity implements OnClickListener {
         gpsBtn.setOnClickListener(this);
     }
 
-    public void getSystemABI() {
+    public String getSystemABI() {
         // get ABI from Java level
         Log.i(TAG, "CPU_ABI(java): " + Build.CPU_ABI);
+        String ret = "CPU_ABI(java): [build] " + Build.CPU_ABI + ", [support]";
         String[] abis = Build.SUPPORTED_ABIS;
         for (int i = 0; i < abis.length; i ++) {
             Log.i(TAG, "abis[" + i + "](java): " + abis[i]);
+            ret = ret + abis[i];
         }
+        ret = ret + "\n";
         // get ABI from Native level
         try {
             Process process = Runtime.getRuntime().exec("getprop ro.product.cpu.abi");
             InputStreamReader inputStreamReader = new InputStreamReader(process.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            Log.i(TAG, "CPU_ABI(native): " + bufferedReader.readLine());
+            String na = "CPU_ABI(native): " + bufferedReader.readLine();
+            Log.i(TAG, na);
+            ret = ret + na;
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        return ret;
     }
 
-    public void getEnvironmentDirectories() {
-        Log.i(TAG, "getRootDirectory(): " + Environment.getRootDirectory().toString());
-        Log.i(TAG, "getDataDirectory(): " + Environment.getDataDirectory().toString());
-        Log.i(TAG, "getDownloadCacheDirectory(): " + Environment.getDownloadCacheDirectory().toString());
-        Log.i(TAG, "getExternalStorageDirectory(): " + Environment.getExternalStorageDirectory().toString());
-        Log.i(TAG, "getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES): " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString());
-        Log.i(TAG, "isExternalStorageEmulated(): " + Environment.isExternalStorageEmulated());
-        Log.i(TAG, "isExternalStorageRemovable(): " + Environment.isExternalStorageRemovable());
+    public String getEnvironmentDirectories() {
+        String[] dirs = {
+            "getRootDirectory(): " + Environment.getRootDirectory().toString(),
+            "getDataDirectory(): " + Environment.getDataDirectory().toString(),
+            "getDownloadCacheDirectory(): " + Environment.getDownloadCacheDirectory().toString(),
+            "getExternalStorageDirectory(): " + Environment.getExternalStorageDirectory().toString(),
+            "getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES): " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString(),
+            "isExternalStorageEmulated(): " + Environment.isExternalStorageEmulated(),
+            "isExternalStorageRemovable(): " + Environment.isExternalStorageRemovable()
+        };
+        String ret = "";
+        for (String d : dirs) {
+            ret = ret + d + "\n";
+            Log.i(TAG, d);
+        }
+        return ret;
     }
 
-    public void getApplicationDirectories(Context context) {
-        Log.i(TAG, "getFilesDir(): " + context.getFilesDir().toString());
-        Log.i(TAG, "getCacheDir(): " + context.getCacheDir().toString());
-        Log.i(TAG, "getExternalFilesDir(null): " + context.getExternalFilesDir(null).toString());
-        Log.i(TAG, "getExternalCacheDir(): " + context.getExternalCacheDir().toString());
+    public String getApplicationDirectories(Context context) {
+        String[] dirs = {
+            "getFilesDir(): " + context.getFilesDir().toString(),
+            "getCacheDir(): " + context.getCacheDir().toString(),
+            "getExternalFilesDir(null): " + context.getExternalFilesDir(null).toString(),
+            "getExternalCacheDir(): " + context.getExternalCacheDir().toString()
+        };
+        String ret = "";
+        for (String d : dirs) {
+            ret = ret + d + "\n";
+            Log.i(TAG, d);
+        }
+        return ret;
     }
 
     public void useDexClassLoader() {
@@ -141,7 +167,7 @@ public class sdkMiscActivity extends Activity implements OnClickListener {
         }
     }
 
-    public void getSystemServiceInfo() {
+    public String getSystemServiceInfo() {
         TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         String str = null;
         try {
@@ -150,51 +176,62 @@ public class sdkMiscActivity extends Activity implements OnClickListener {
             e.printStackTrace();
         } finally {
             Log.i(TAG, "IMEI: " + str);
+            return "IMEI: " + str;
         }
     }
 
-    public void getGpsStatus() {
+    public String getGpsStatus() {
         LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        Log.i(TAG, "all location providers: " + lm.getAllProviders().toString());
+        String ret = "all location providers: " + lm.getAllProviders().toString();
+        Log.i(TAG, ret);
         if (lm.getAllProviders().contains(android.location.LocationManager.GPS_PROVIDER)) {
             String b = lm.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER) ? "YES" : "NO";
-            Log.i(TAG, "device has GPS, app's permission to it? - " + b);
+            Log.i(TAG, "device has GPS, enabled? - " + b);
             while (!lm.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
-                Log.i(TAG, "please grant the location access to GPS!");
-                Toast.makeText(this, "device has GPS, please grant the location access", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "please enable GPS, and grant app's access to it manually!");
+                Toast.makeText(this, "device has GPS, please enable and grant the location access", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Settings.ACTION_APPLICATION_SETTINGS);
                 startActivityForResult(intent, 0);
             }
             b = (lm.getProvider(android.location.LocationManager.GPS_PROVIDER) != null) ? "YES" : "NO";
-            Log.i(TAG, "app got the GPS controller? - " + b);
+            String t = "app got the GPS controller? - " + b;
+            Log.i(TAG, t);
+            ret = ret + "\n" + t;
         } else {
-            Log.i(TAG, "device does NOT have GPS!");
+            String t = "device does NOT have GPS!";
+            Log.i(TAG, t);
+            ret = ret + "\n" + t;
         }
+        return ret;
     }
 
     @Override
     public void onClick(View view) {
+        String retString = "nothing";
         switch (view.getId()) {
         case R.id.abi_button:
-            getSystemABI();
+            retString = getSystemABI();
             break;
         case R.id.env_directory_button:
-            getEnvironmentDirectories();
+            retString = getEnvironmentDirectories();
             break;
         case R.id.app_directory_button:
-            getApplicationDirectories(this);
+            retString = getApplicationDirectories(this);
             break;
         case R.id.classloader_button:
             useDexClassLoader();
+            retString = "DexClassLoader is complex, check log";
             break;
         case R.id.systemservice_button:
-            getSystemServiceInfo();
+            retString = getSystemServiceInfo();
             break;
         case R.id.gps_button:
-            getGpsStatus();
+            retString = getGpsStatus();
             break;
         default:
             break;
         }
+        Log.i(TAG, retString);
+        miscTxt.setText(retString);
     }
 }
