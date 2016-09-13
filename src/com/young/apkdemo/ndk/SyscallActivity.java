@@ -1,6 +1,6 @@
-package com.young.ApiDemo.ndk;
+package com.young.apkdemo.ndk;
 
-import com.young.ApiDemo.R;
+import com.young.apkdemo.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;

@@ -1,6 +1,6 @@
-package com.young.ApiDemo;
+package com.young.apkdemo;
 
-import com.young.ApiDemo.R;
+import com.young.apkdemo.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +18,7 @@ import android.content.ContextWrapper;
 import java.io.IOException;
 
 public class MiscActivity extends Activity implements OnClickListener {
-    private static final String TAG = "ApiDemo";
+    private static final String TAG = "apkdemo";
     private static String fileHelperPath;
     private TextView MiscTxt;
     private Button btnCreateFileAndroid;

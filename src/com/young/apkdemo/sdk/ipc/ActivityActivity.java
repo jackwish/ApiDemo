@@ -1,6 +1,6 @@
-package com.young.ApiDemo.sdk.ipc;
+package com.young.apkdemo.sdk.ipc;
 
-import com.young.ApiDemo.R;
+import com.young.apkdemo.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class ActivityActivity extends Activity implements OnClickListener {
-    private static final String TAG = "ApiDemo";
+    private static final String TAG = "apkdemo";
     private Button activityStartBtn;
     private Button activityStartForResultBtn;
 

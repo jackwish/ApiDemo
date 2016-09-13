@@ -1,9 +1,9 @@
-package com.young.ApiDemo;
+package com.young.apkdemo;
 
-import com.young.ApiDemo.sdk.IpcActivity;
-import com.young.ApiDemo.sdk.WidgetActivity;
-import com.young.ApiDemo.sdk.DataStorageActivity;
-import com.young.ApiDemo.sdk.sdkMiscActivity;
+import com.young.apkdemo.sdk.IpcActivity;
+import com.young.apkdemo.sdk.WidgetActivity;
+import com.young.apkdemo.sdk.DataStorageActivity;
+import com.young.apkdemo.sdk.sdkMiscActivity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class SdkActivity extends Activity implements OnClickListener {
-    private static final String TAG = "ApiDemo";
+    private static final String TAG = "apkdemo";
     private Button ipcBtn;
     private Button widgetBtn;
     private Button dataStorageBtn;

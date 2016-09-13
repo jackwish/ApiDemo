@@ -1,7 +1,7 @@
 <resources>
     <!-- AndroidManifest.xml -->
     <string name="default_text">nothing happened yet</string>
-    <string name="app_name">ApiDemo</string>
+    <string name="app_name">apkdemo</string>
     <!-- res/layout/activity_main.xml -->
     <string name="sdk_button">SDK</string>
     <string name="ndk_button">NDK</string>

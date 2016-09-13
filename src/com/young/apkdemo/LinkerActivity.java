@@ -1,6 +1,6 @@
-package com.young.ApiDemo;
+package com.young.apkdemo;
 
-import com.young.ApiDemo.R;
+import com.young.apkdemo.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class LinkerActivity extends Activity implements OnClickListener {
-    private static final String TAG = "ApiDemo";
+    private static final String TAG = "apkdemo";
     private TextView LinkerTxt;
     private Button btnPublic;
     private Button btnPrivate;

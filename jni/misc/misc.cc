@@ -35,7 +35,7 @@ static std::string gen_all_paths()
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_young_ApiDemo_MiscActivity_tryCreateFileAndroid(JNIEnv *env, jobject obj)
+Java_com_young_apkdemo_MiscActivity_tryCreateFileAndroid(JNIEnv *env, jobject obj)
 {
     std::string create_ret = "permisson denied paths(create):";
     std::string open_ret = "permisson denied paths(open, possible invalid results):";
@@ -56,7 +56,7 @@ Java_com_young_ApiDemo_MiscActivity_tryCreateFileAndroid(JNIEnv *env, jobject ob
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_young_ApiDemo_MiscActivity_tryOpenFileAndroid(JNIEnv *env, jobject obj)
+Java_com_young_apkdemo_MiscActivity_tryOpenFileAndroid(JNIEnv *env, jobject obj)
 {
     std::string open_ret = "permisson denied paths(open):";
     for (size_t i = 0; i < (sizeof(g_paths) / sizeof(char*)); i++) {
@@ -186,7 +186,7 @@ done:
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_young_ApiDemo_MiscActivity_tryCreateFileStandalone(JNIEnv *env, jobject obj, jstring path)
+Java_com_young_apkdemo_MiscActivity_tryCreateFileStandalone(JNIEnv *env, jobject obj, jstring path)
 {
     LOGI("in tryCreateFileAndroid() native method");
     std::string ret = standalone_file_test_core(env, path, "create");
@@ -195,7 +195,7 @@ Java_com_young_ApiDemo_MiscActivity_tryCreateFileStandalone(JNIEnv *env, jobject
 
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_young_ApiDemo_MiscActivity_tryOpenFileStandalone(JNIEnv *env, jobject obj, jstring path)
+Java_com_young_apkdemo_MiscActivity_tryOpenFileStandalone(JNIEnv *env, jobject obj, jstring path)
 {
     LOGI("in tryOpenFileAndroid() native method");
     std::string ret = standalone_file_test_core(env, path, "open");

@@ -41,7 +41,7 @@ if [ $# -eq 2 ]; then
         ver=release
     fi
 fi
-apkName=ApiDemo
+apkName=apkdemo
 
 
 ############################# build apk ##############################

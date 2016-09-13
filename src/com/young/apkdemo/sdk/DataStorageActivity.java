@@ -1,6 +1,6 @@
-package com.young.ApiDemo.sdk;
+package com.young.apkdemo.sdk;
 
-import com.young.ApiDemo.R;
+import com.young.apkdemo.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +18,7 @@ import java.io.FileOutputStream;
 import java.io.FileInputStream;
 
 public class DataStorageActivity extends Activity implements OnClickListener {
-    private static final String TAG = "ApiDemo";
+    private static final String TAG = "apkdemo";
     private Button spBtn;
     private Button sqliteBtn;
     private Button cpBtn;
