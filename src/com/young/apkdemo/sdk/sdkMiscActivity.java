@@ -193,10 +193,19 @@ public class sdkMiscActivity extends Activity implements OnClickListener {
                 Intent intent = new Intent(Settings.ACTION_APPLICATION_SETTINGS);
                 startActivityForResult(intent, 0);
             }
-            b = (lm.getProvider(android.location.LocationManager.GPS_PROVIDER) != null) ? "YES" : "NO";
-            String t = "app got the GPS controller? - " + b;
-            Log.i(TAG, t);
-            ret = ret + "\n" + t;
+            try {
+                b = (lm.getProvider(android.location.LocationManager.GPS_PROVIDER) != null) ? "YES" : "NO";
+                b = "app got the GPS controller? - " + b;
+            } catch (Exception e) {
+                b = "Exception when get GPS provider!";
+                e.printStackTrace();
+                Toast.makeText(this, "device has GPS, please enable and grant the location access", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_SETTINGS);
+                startActivityForResult(intent, 0);
+            } finally {
+                Log.i(TAG, b);
+                ret = ret + "\n" + b;
+            }
         } else {
             String t = "device does NOT have GPS!";
             Log.i(TAG, t);
