@@ -32,6 +32,12 @@
         android:layout_height="wrap_content"
         android:text="@string/ns_check_armpath" />
 
+    <Button
+        android:id="@+id/ns_multi_classloader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ns_multi_classloader" />
+
     <TextView
         android:id="@+id/linker_text"
         android:layout_width="match_parent"
