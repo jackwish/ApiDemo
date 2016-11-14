@@ -1,1 +1,1 @@
-Application.mk.x86
+Application.mk.arm
