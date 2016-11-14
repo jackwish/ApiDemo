@@ -24,6 +24,7 @@ public class LinkerActivity extends Activity implements OnClickListener {
     private Button btnArmpath;
     private Button btnMultiClassLoader;
     private Button btnMultiLibIns;
+    private Button btnUnwindFindExidx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +45,14 @@ public class LinkerActivity extends Activity implements OnClickListener {
         btnMultiClassLoader.setOnClickListener(this);
         btnMultiLibIns = (Button)findViewById(R.id.ns_multi_lib_instance);
         btnMultiLibIns.setOnClickListener(this);
+        btnUnwindFindExidx = (Button)findViewById(R.id.dl_unwind_find_exidx);
+        btnUnwindFindExidx.setOnClickListener(this);
     }
 
     /* load the main functionality native library to work */
     static {
         System.loadLibrary("namespace");
+        System.loadLibrary("dltest");
     }
 
     /**
@@ -75,6 +79,9 @@ public class LinkerActivity extends Activity implements OnClickListener {
             break;
         case R.id.ns_multi_lib_instance:
             retString = MultiInstanceOfSameLibrary(this);
+            break;
+        case R.id.dl_unwind_find_exidx:
+            retString = dlUnwindFindExidx();
             break;
         default:
             break;
@@ -207,6 +214,10 @@ public class LinkerActivity extends Activity implements OnClickListener {
         }
     }
 
+    /**
+     * Test whether dl_unwind_find_exidx() works correctly.
+     */
+    private static native String dlUnwindFindExidx();
 }
 
 class ClassA {
