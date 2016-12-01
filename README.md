@@ -1,10 +1,10 @@
-# Android SDK and NDK Api Demo
+# Android Test Collection
 
 ## Introduction
 
-This project demonstrate a few examples of how to employ Android API, mostly NDK.
+This project demonstrates a few examples of Android API, mostly NDK's.
 The motivation is to have a easy way to verify whether the Native layer of Android system works correctly.
-So, basically, this is a collection of NDK related unit test for Android system developer to use.
+So, basically, this is a collection of SDK/NDK related unit test for Android system developer.
 
 
 ## Test Collection
@@ -16,7 +16,8 @@ So, basically, this is a collection of NDK related unit test for Android system 
     * Includes JNI functions, System call and Signal.
 
 * Dynamic Link
-    * Mainly about the Android Nougat feature [namespace], will extend.
+    * Android Nougat feature [namespace].
+    * Standard libdl API.
 
 * Misc
     * other cases..
@@ -54,9 +55,9 @@ Just start the application and select the test you need.
 
 ## Backup
 
-Copyright 2014~2015 Mu Weiyang.
+Copyright 2014~2015 [Mu Weiyang].
 
-Copyright 2016 WANG Zhenhua.
+Copyright 2016~ [WANG Zhenhua].
 
 
 [namespace]: https://android-developers.blogspot.com/2016/06/android-changes-for-ndk-developers.html
