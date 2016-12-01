@@ -25,6 +25,7 @@ public class LinkerActivity extends Activity implements OnClickListener {
     private Button btnMultiClassLoader;
     private Button btnMultiLibIns;
     private Button btnUnwindFindExidx;
+    private Button btnIndirectDependent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,8 @@ public class LinkerActivity extends Activity implements OnClickListener {
         btnMultiLibIns.setOnClickListener(this);
         btnUnwindFindExidx = (Button)findViewById(R.id.dl_unwind_find_exidx);
         btnUnwindFindExidx.setOnClickListener(this);
+        btnIndirectDependent = (Button)findViewById(R.id.indirect_dependent);
+        btnIndirectDependent.setOnClickListener(this);
     }
 
     /* load the main functionality native library to work */
@@ -82,6 +85,9 @@ public class LinkerActivity extends Activity implements OnClickListener {
             break;
         case R.id.dl_unwind_find_exidx:
             retString = dlUnwindFindExidx();
+            break;
+        case R.id.indirect_dependent:
+            retString = indirectDependent();
             break;
         default:
             break;
@@ -218,6 +224,11 @@ public class LinkerActivity extends Activity implements OnClickListener {
      * Test whether dl_unwind_find_exidx() works correctly.
      */
     private static native String dlUnwindFindExidx();
+
+    /**
+     * Try to dlsym a non-NDK symbol indirectly.
+     */
+    private static native String indirectDependent();
 }
 
 class ClassA {
