@@ -49,15 +49,17 @@ jstring Java_com_young_apkdemo_LinkerActivity_indirectDependent(JNIEnv *env, job
     char* ret = NULL;
 
 #define SYMBOL_TO_LOOKUP  "_ZNK7android7RefBase9decStrongEPKv"
+#define ORIGIN_LIB  "libbinder.so"
+#define NDK_LIB  "libcamera2ndk.so"
 
-    TRY_LOAD(libbinder, "libbinder.so", ret, " - a greylisted library.");
+    TRY_LOAD(libbinder, ORIGIN_LIB, ret, " - a greylisted library.");
     TRY_LOOKUP(direct, libbinder, SYMBOL_TO_LOOKUP, ret, " in libbinder");
-    LOGI("%s of libbinder.so is @ %p", SYMBOL_TO_LOOKUP, direct);
+    LOGI("%s of " ORIGIN_LIB " is @ %p", SYMBOL_TO_LOOKUP, direct);
 
-    TRY_LOAD(libcamera2ndk, "libcamera2ndk.so", ret, " - should not be...");
-    TRY_LOOKUP(indirect, libcamera2ndk, SYMBOL_TO_LOOKUP, ret, " in libcamera2ndk - good!");
-    LOGI("get symbol %s from %s - Danger - app can access non-NDK symbol",
-         SYMBOL_TO_LOOKUP, "libcamera2ndk.so");
+    TRY_LOAD(libcamera2ndk, NDK_LIB, ret, " - should not be...");
+    TRY_LOOKUP(indirect, libcamera2ndk, SYMBOL_TO_LOOKUP, ret, " in " NDK_LIB " - good!");
+    ret = "get symbol " SYMBOL_TO_LOOKUP " from " NDK_LIB " - Danger - app can access non-NDK symbol";
+    LOGI("%s", ret);
 
     if (direct != indirect) {
         ret = "[Warning] get a non-NDK symbol from NDK library (via dependency tree lookup.)\n"
