@@ -66,7 +66,6 @@ public class LinkerActivity extends Activity implements OnClickListener {
         String retString = "nothing";
         switch (view.getId()) {
         case R.id.ns_load_public_lib:
-            System.loadLibrary("c");
             retString = verifyLibraryLoading("libandroid.so", "public", true);
             break;
         case R.id.ns_load_private_lib:

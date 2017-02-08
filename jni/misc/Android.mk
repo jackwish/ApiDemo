@@ -14,3 +14,11 @@ LOCAL_C_INCLUDES += $(MYHEADER)
 LOCAL_SRC_FILES := file_helper.cc file_op_wrapper.cc
 LOCAL_CFLAGS := -DMYSTANDALONE
 include $(BUILD_EXECUTABLE)
+
+# a standalone binary
+include $(CLEAR_VARS)
+LOCAL_MODULE := hello
+LOCAL_C_INCLUDES += $(MYHEADER)
+LOCAL_SRC_FILES := hello.c
+LOCAL_CFLAGS := -DMYSTANDALONE
+include $(BUILD_EXECUTABLE)

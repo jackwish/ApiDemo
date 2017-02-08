@@ -32,6 +32,12 @@
         android:layout_height="wrap_content"
         android:text="@string/try_open_file_standalone" />
 
+    <Button
+        android:id="@+id/get_abi_native"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/get_abi_native" />
+
     <TextView
         android:id="@+id/misc_text"
         android:layout_width="match_parent"

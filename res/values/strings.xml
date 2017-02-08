@@ -91,4 +91,5 @@
     <string name="try_open_file_android">try *open* file in JNI</string>
     <string name="try_create_file_standalone">try *create* file in EXE</string>
     <string name="try_open_file_standalone">try *open* file in EXE</string>
+    <string name="get_abi_native">Get ABI</string>
 </resources>

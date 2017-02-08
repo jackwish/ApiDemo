@@ -25,6 +25,7 @@ public class MiscActivity extends Activity implements OnClickListener {
     private Button btnOpenFileAndroid;
     private Button btnCreateFileStandalone;
     private Button btnOpenFileStandalone;
+    private Button btnGetAbi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,8 @@ public class MiscActivity extends Activity implements OnClickListener {
         btnCreateFileStandalone.setOnClickListener(this);
         btnOpenFileStandalone = (Button)findViewById(R.id.try_open_file_standalone);
         btnOpenFileStandalone.setOnClickListener(this);
+        btnGetAbi = (Button)findViewById(R.id.get_abi_native);
+        btnGetAbi.setOnClickListener(this);
 
         // prepare create/open native file helper executable
         fileHelperPath = prepareExecutable();
@@ -66,6 +69,9 @@ public class MiscActivity extends Activity implements OnClickListener {
             break;
         case R.id.try_open_file_standalone:
             retString = tryOpenFileStandalone(fileHelperPath);
+            break;
+        case R.id.get_abi_native:
+            retString = getAbi();
             break;
         default:
             break;
@@ -105,5 +111,7 @@ public class MiscActivity extends Activity implements OnClickListener {
             return fret;
         }
     }
+
+    private static native String getAbi();
 
 }

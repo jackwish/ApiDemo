@@ -10,6 +10,7 @@
 #include <libgen.h>
 #include <string.h>
 #include <assert.h>
+#include <sys/system_properties.h>
 
 #include <string>
 
@@ -200,5 +201,16 @@ Java_com_young_apkdemo_MiscActivity_tryOpenFileStandalone(JNIEnv *env, jobject o
     LOGI("in tryOpenFileAndroid() native method");
     std::string ret = standalone_file_test_core(env, path, "open");
     return env->NewStringUTF(ret.c_str());
+}
+
+extern "C" JNIEXPORT jstring JNICALL
+Java_com_young_apkdemo_MiscActivity_getAbi(JNIEnv *env, jobject obj)
+{
+    LOGI("in getAbi() native method");
+    char buf[1024] = {'\0'};
+    __system_property_get("ro.product.cpu.abi", buf);
+    LOGI("get ABI: %s", buf);
+
+    return env->NewStringUTF(buf);
 }
 

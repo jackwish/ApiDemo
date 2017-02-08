@@ -76,7 +76,7 @@ public class sdkMiscActivity extends Activity implements OnClickListener {
             Process process = Runtime.getRuntime().exec("getprop ro.product.cpu.abi");
             InputStreamReader inputStreamReader = new InputStreamReader(process.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            String na = "CPU_ABI(native): " + bufferedReader.readLine();
+            String na = "CPU_ABI(standalone): " + bufferedReader.readLine();
             Log.i(TAG, na);
             ret = ret + na;
         } catch (IOException e) {
