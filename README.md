@@ -1,4 +1,4 @@
-# Android Test Collection
+# Android NDK/SDK Usage Collection
 
 ## Introduction
 
@@ -27,13 +27,17 @@ So, basically, this is a collection of SDK/NDK related unit test for Android sys
 
 Just build and run the package on your devices. Sometime you need to check the result via `logcat`.
 
+### Setup
+
+Make sure you have [SDK](https://developer.android.com/studio/index.html) and [NDK](https://developer.android.com/ndk/index.html) configured on your machine.
+
 
 ### Build & Install
 
 We noticed that some of Native behavior of Android system depends on whether the application is signed with a debug key.
 This is probably some bugs of Android system, we will check in the future. Anyway, we provide both debug and release build.
 
-The default build is debug version and uses the "newest" Android SDK on your machine, should cover most caese. And, you can set a specific SDK version to use via command.
+The default build is debug version and uses the "latest" Android SDK on your machine, should cover most caese. And, you can set a specific SDK version to use via command.
 The script automatically installs the newly built package.
 
 * **default build**: `./build`
