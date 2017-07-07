@@ -18,6 +18,7 @@ JNIEXPORT jboolean JNICALL Java_com_young_apkdemo_LinkerActivity_nsLoadLib(JNIEn
     void* handle = dlopen(libname, RTLD_NOW);
     if (handle == NULL) {
         LOGI("fail to load %s", libname);
+        LOGI("dlerror: %s", dlerror());
     } else {
         LOGI("loaded %s", libname);
     }

@@ -103,8 +103,8 @@ public class LinkerActivity extends Activity implements OnClickListener {
     private String verifyLibraryLoading(String lib, String type, boolean expect) {
         Log.i(TAG, "going to load " + type + " library \"" + lib + "\" to verify - if namespace based dynamic link works");
         boolean loaded = nsLoadLib(lib);
-        return (loaded == expect) ? (type + " library \"" + lib + "\" load pass - namespace works") :
-            (type + " library \"" + lib + "\" load pass - namespace doesn't work");
+        return (loaded == expect) ? (type + " library \"" + lib + "\" loading result matches - namespace works") :
+            (type + " library \"" + lib + "\" loading result NOT match - namespace doesn't work");
     }
 
     private static native boolean nsLoadLib(String lib);
