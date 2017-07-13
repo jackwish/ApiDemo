@@ -25,6 +25,7 @@ public class LinkerActivity extends Activity implements OnClickListener {
     private Button btnArmpath;
     private Button btnMultiClassLoader;
     private Button btnMultiLibIns;
+    private Button btnLoadZip;
     private Button btnUnwindFindExidx;
     private Button btnIndirectDependent;
 
@@ -49,6 +50,8 @@ public class LinkerActivity extends Activity implements OnClickListener {
         btnMultiClassLoader.setOnClickListener(this);
         btnMultiLibIns = (Button)findViewById(R.id.ns_multi_lib_instance);
         btnMultiLibIns.setOnClickListener(this);
+        btnLoadZip = (Button)findViewById(R.id.load_from_zip);
+        btnLoadZip.setOnClickListener(this);
         btnUnwindFindExidx = (Button)findViewById(R.id.dl_unwind_find_exidx);
         btnUnwindFindExidx.setOnClickListener(this);
         btnIndirectDependent = (Button)findViewById(R.id.indirect_dependent);
@@ -59,6 +62,7 @@ public class LinkerActivity extends Activity implements OnClickListener {
     static {
         System.loadLibrary("namespace");
         System.loadLibrary("dltest");
+        System.loadLibrary("dlext_test");
     }
 
     /**
@@ -88,6 +92,9 @@ public class LinkerActivity extends Activity implements OnClickListener {
             break;
         case R.id.ns_multi_lib_instance:
             retString = MultiInstanceOfSameLibrary(this);
+            break;
+        case R.id.load_from_zip:
+            retString = loadLibraryFromZip();
             break;
         case R.id.dl_unwind_find_exidx:
             retString = dlUnwindFindExidx();
@@ -225,6 +232,11 @@ public class LinkerActivity extends Activity implements OnClickListener {
             return "Exception encountered, maybe try to relaunch the app?";
         }
     }
+
+    /**
+     * Test whether can load from zip archive correctly.
+     */
+    private static native String loadLibraryFromZip();
 
     /**
      * Test whether dl_unwind_find_exidx() works correctly.
