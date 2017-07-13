@@ -21,6 +21,7 @@ public class LinkerActivity extends Activity implements OnClickListener {
     private Button btnPublic;
     private Button btnPrivate;
     private Button btnGreylist;
+    private Button btnFaked;
     private Button btnArmpath;
     private Button btnMultiClassLoader;
     private Button btnMultiLibIns;
@@ -40,6 +41,8 @@ public class LinkerActivity extends Activity implements OnClickListener {
         btnPrivate.setOnClickListener(this);
         btnGreylist = (Button)findViewById(R.id.ns_load_greylist_lib);
         btnGreylist.setOnClickListener(this);
+        btnFaked = (Button)findViewById(R.id.ns_load_faked_lib);
+        btnFaked.setOnClickListener(this);
         btnArmpath = (Button)findViewById(R.id.ns_check_armpath);
         btnArmpath.setOnClickListener(this);
         btnMultiClassLoader = (Button)findViewById(R.id.ns_multi_classloader);
@@ -73,6 +76,9 @@ public class LinkerActivity extends Activity implements OnClickListener {
             break;
         case R.id.ns_load_greylist_lib:
             retString = verifyLibraryLoading("libandroid_runtime.so", "greylist", true);
+            break;
+        case R.id.ns_load_faked_lib:
+            retString = verifyLibraryLoading("libart.so", "faked", true);
             break;
         case R.id.ns_check_armpath:
             retString = nsScanArmPath();
