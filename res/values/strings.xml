@@ -78,18 +78,18 @@
     <string name="sig_method_button4">Signal 4 (tkill SIGSEGV)</string>
     <string name="sig_method_button5">Signal 5 (sigsuspend)</string>
     <!-- res/layout/activity_linker.xml -->
-    <string name="ns_load_public_lib">namespace: load Public library</string>
-    <string name="ns_load_private_lib">namespace: load Non-public library</string>
-    <string name="ns_load_greylist_lib">namespace: load Greylist library</string>
-    <string name="ns_load_faked_lib">namespace: load Faked library</string>
+    <string name="ns_load_public_lib">ns: load Public library</string>
+    <string name="ns_load_private_lib">ns: load Non-public library</string>
+    <string name="ns_load_greylist_lib">ns: load Greylist library</string>
+    <string name="ns_load_faked_lib">ns: load Faked library</string>
     <string name="ns_check_armpath">devices: scan system library path</string>
-    <string name="ns_multi_classloader">namespace: multiple ClassLoader</string>
-    <string name="ns_multi_lib_instance">namespace: multiple library instance</string>
+    <string name="ns_multi_classloader">ns: multiple ClassLoader</string>
+    <string name="ns_multi_lib_instance">ns: multiple library instance</string>
     <string name="load_from_zip">load library from ZIP archive</string>
     <string name="dl_unwind_find_exidx">libdl: dl_unwind_find_exidx</string>
     <string name="indirect_dependent">dlsym a non-NDK symbol </string>
     <string name="editable_lib_name">type in lib name: *.lib </string>
-    <string name="ns_load_certain_lib">namespace: load certain library </string>
+    <string name="ns_load_certain_lib">ns: load certain library </string>
     <!-- res/layout/misc.xml -->
     <string name="try_create_file_android">try *create* file in JNI</string>
     <string name="try_open_file_android">try *open* file in JNI</string>
