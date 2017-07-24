@@ -6,7 +6,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:gravity="center_vertical|center_horizontal"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true" >
 
     <Button
         android:id="@+id/ns_load_public_lib"
@@ -67,6 +69,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/ns_check_armpath" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/editable_lib_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/editable_lib_name" />
+
+        <Button
+            android:id="@+id/ns_load_certain_lib"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/ns_load_certain_lib" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/linker_text"

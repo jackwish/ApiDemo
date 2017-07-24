@@ -88,6 +88,8 @@
     <string name="load_from_zip">load library from ZIP archive</string>
     <string name="dl_unwind_find_exidx">libdl: dl_unwind_find_exidx</string>
     <string name="indirect_dependent">dlsym a non-NDK symbol </string>
+    <string name="editable_lib_name">type in lib name: *.lib </string>
+    <string name="ns_load_certain_lib">namespace: load certain library </string>
     <!-- res/layout/misc.xml -->
     <string name="try_create_file_android">try *create* file in JNI</string>
     <string name="try_open_file_android">try *open* file in JNI</string>
