@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.EditText;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -28,6 +29,8 @@ public class LinkerActivity extends Activity implements OnClickListener {
     private Button btnLoadZip;
     private Button btnUnwindFindExidx;
     private Button btnIndirectDependent;
+    private EditText EditableLibName;
+	private Button btnLoadCertainLib;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,11 @@ public class LinkerActivity extends Activity implements OnClickListener {
         btnUnwindFindExidx.setOnClickListener(this);
         btnIndirectDependent = (Button)findViewById(R.id.indirect_dependent);
         btnIndirectDependent.setOnClickListener(this);
+        EditableLibName = (EditText)findViewById(R.id.editable_lib_name);
+        EditableLibName.clearFocus();
+        EditableLibName.setSelectAllOnFocus(true);
+        btnLoadCertainLib = (Button)findViewById(R.id.ns_load_certain_lib);
+        btnLoadCertainLib.setOnClickListener(this);
     }
 
     /* load the main functionality native library to work */
@@ -102,6 +110,10 @@ public class LinkerActivity extends Activity implements OnClickListener {
         case R.id.indirect_dependent:
             retString = indirectDependent();
             break;
+        case R.id.ns_load_certain_lib:
+            String lib_name = EditableLibName.getText().toString();
+			retString = certainLibraryLoading(lib_name);
+            break;
         default:
             break;
         }
@@ -109,6 +121,12 @@ public class LinkerActivity extends Activity implements OnClickListener {
         LinkerTxt.setText(retString);
     }
 
+    private String certainLibraryLoading(String lib) {
+        Log.i(TAG, "going to load " + "certain library \"" + lib + "\" to verify - if namespace based dynamic link works");
+        boolean loaded = nsLoadLib(lib);
+        return (loaded == true) ? ("certain library \"" + lib + "\" loads success, users themselves verify the result") :
+            ("certain library \"" + lib + "\" loads fail, users themselves verify the result");
+    }
 
     /**
      * A generic method to load library, wraps the native function *nsLoadLib()*.
