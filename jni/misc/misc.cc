@@ -198,7 +198,7 @@ Java_com_young_apkdemo_MiscActivity_tryCreateFileStandalone(JNIEnv *env, jobject
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_young_apkdemo_MiscActivity_tryOpenFileStandalone(JNIEnv *env, jobject obj, jstring path)
 {
-    LOGI("in tryOpenFileAndroid() native method");
+    LOGI("in tryOpenFileStandalone() native method");
     std::string ret = standalone_file_test_core(env, path, "open");
     return env->NewStringUTF(ret.c_str());
 }
