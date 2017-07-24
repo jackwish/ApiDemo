@@ -30,7 +30,7 @@ public class LinkerActivity extends Activity implements OnClickListener {
     private Button btnUnwindFindExidx;
     private Button btnIndirectDependent;
     private EditText EditableLibName;
-	private Button btnLoadCertainLib;
+    private Button btnLoadCertainLib;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +112,7 @@ public class LinkerActivity extends Activity implements OnClickListener {
             break;
         case R.id.ns_load_certain_lib:
             String lib_name = EditableLibName.getText().toString();
-			retString = certainLibraryLoading(lib_name);
+            retString = certainLibraryLoading(lib_name);
             break;
         default:
             break;
@@ -124,8 +124,7 @@ public class LinkerActivity extends Activity implements OnClickListener {
     private String certainLibraryLoading(String lib) {
         Log.i(TAG, "going to load " + "certain library \"" + lib + "\" to verify - if namespace based dynamic link works");
         boolean loaded = nsLoadLib(lib);
-        return (loaded == true) ? ("certain library \"" + lib + "\" loads success, users themselves verify the result") :
-            ("certain library \"" + lib + "\" loads fail, users themselves verify the result");
+        return "certain library \"" + lib + "\" loads " + (loaded ? "PASS" : "FAIL");
     }
 
     /**
