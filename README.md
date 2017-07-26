@@ -27,30 +27,22 @@ So, basically, this is a collection of SDK/NDK related unit test for Android sys
 
 Just build and run the package on your devices. Sometime you need to check the result via `logcat`.
 
-### Setup
+### Requirements
 
-Make sure you have [SDK](https://developer.android.com/studio/index.html) and [NDK](https://developer.android.com/ndk/index.html) configured on your machine.
-
+Make sure you have [SDK](https://developer.android.com/studio/index.html) and [NDK](https://developer.android.com/ndk/downloads/older_releases.html) (only support old version like `android-ndk-r11c`) configured on your machine. The build tool also relies on python3 and `subprocess` module.
 
 ### Build & Install
 
 We noticed that some of Native behavior of Android system depends on whether the application is signed with a debug key.
 This is probably some bugs of Android system, we will check in the future. Anyway, we provide both debug and release build.
 
-The default build is debug version and uses the "latest" Android SDK on your machine, should cover most caese. And, you can set a specific SDK version to use via command.
-The script automatically installs the newly built package.
+* **default build**: `make` gives you a debug mode application with ABI as armeabi built with latest SDK on your machine
 
-* **default build**: `./build`
+* **customized build**: `make help` or `./tools/build.py -h` to see options.
 
-* **Specify a SDK version**: `./build android-20`
-    * Note: this doesn't change the `target_sdk_version` in `AndroidManifest.xml`. You need to change it by hand :(.
+* **legacy build**: `make legacy` or `make sh` if you prefer shell based build tool.
 
-* **build x86 version**: `./build x`
-    * default build is ARM version.
-
-* **Build a release version**: `./build android-20 1`
-    * When build a release version, needs to specify SDK version by hand
-
+By default, the package will install after build automatically.
 
 ### Run
 

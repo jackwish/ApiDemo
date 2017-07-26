@@ -15,7 +15,7 @@ def main(args):
 def build_all(apkname, target_pkg, args):
     gen_java(apkname, args.sdk)
     build_binary()
-    build_package(apkname, target_pkg, args.mode, args.key)
+    build_package(apkname, target_pkg, args.mode)
 
 def gen_java(apkname, sdk):
     cmd = 'android update project -n ' + apkname + ' -p . -t ' + sdk
@@ -29,25 +29,24 @@ def build_binary():
         try_exec(cmd, msg)
 
 
-def build_package(apkname, target_pkg, mode, key):
+def build_package(apkname, target_pkg, mode):
     cmd = 'ant clean'
     msg = 'Preparing package building'
     try_exec(cmd, msg)
 
     cmd = 'ant ' + mode
-    msg = 'Building package'
+    msg = 'Building package ' + target_pkg
     try_exec(cmd, msg)
 
-    sign_pkg(apkname, target_pkg, mode, key)
+    sign_pkg(apkname, target_pkg, mode)
 
 
-def sign_pkg(apkname, target_pkg, mode, key):
+def sign_pkg(apkname, target_pkg, mode):
     if mode == 'debug': return
     print("Signing package...")
 
     unsigned_pkg = 'bin/' + apkname + '-' + mode + '-unsigned.apk'
-    cmd = 'jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ' + key + ' ' + unsigned_pkg + ' test'
-    print(cmd)
+    cmd = 'jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ./tools/release.key -storepass 122333 ' + unsigned_pkg + ' test'
     try_exec(cmd)
 
     cmd = 'zipalign -v 4 ' + unsigned_pkg + ' ' + target_pkg
@@ -59,7 +58,7 @@ def install_pkg(install, target_pkg, device):
         print("No device connected!")
         exit()
     cmd = 'adb install -r ' + target_pkg
-    msg = "Install package " + target_pkg
+    msg = "Installing package " + target_pkg
     try_exec(cmd, msg)
 
 def try_exec(cmd, msg=None):
@@ -90,15 +89,12 @@ def get_devices():
 def parse_args():
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     sdk = get_default_sdk()
-    root_dir = os.path.dirname(os.getcwd())
-    key_path = os.path.join(root_dir, 'tools/release.key')
     device, devices = get_devices()
     parser.add_argument('-s', '--sdk',      help='provide a SDK version', default=sdk)
     parser.add_argument('-a', '--abi',      help='specify ABI of target device', choices=['armeabi', 'x86'], default='armeabi')
     parser.add_argument('-m', '--mode',     help='the mode of target application', choices=['debug', 'release'], default='debug')
     parser.add_argument('-i', '--install',  help='whether to install after build', choices=[True, False], type=bool, default=True)
     parser.add_argument('-d', '--device',   help='specify the device to install package', choices=devices, default=device)
-    parser.add_argument('-k', '--key',      help='specify the key for release package', default=key_path)
     return parser.parse_args()
 
 if __name__ == '__main__':

@@ -78,8 +78,8 @@ fi
 if [[ "${ver}" == "debug" ]]; then
     adb install -r bin/${apkName}-debug.apk
 else
-    echo ">>> NOTE: type the passowrd as requested: 122333\n"
-    jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ./tools/release.key bin/${apkName}-${ver}-unsigned.apk test
+    # echo ">>> NOTE: type the passowrd as requested: 122333\n"
+    jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -storepass 122333 -keystore ./tools/release.key bin/${apkName}-${ver}-unsigned.apk test
     zipalign -v 4 bin/${apkName}-${ver}-unsigned.apk ${apkName}-signed.apk
     adb install -r ${apkName}-signed.apk
 fi
