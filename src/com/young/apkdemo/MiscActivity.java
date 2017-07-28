@@ -94,9 +94,9 @@ public class MiscActivity extends Activity implements OnClickListener {
 
     // copy file helper from assets and set it executable
     private String prepareExecutable() {
-        String CPU_ABI = android.os.Build.CPU_ABI;
-        final String file_helper = "file_helper" + (CPU_ABI.equals("x86") ? ".x86" : ".arm");
-        Log.i(TAG, "CPU ABI is" + CPU_ABI);
+        final String arch = System.getProperty("os.arch");
+        final String file_helper = "file_helper" + (arch.startsWith("arm") ? ".arm" : ".x86" );
+        Log.i(TAG, "os.arch is" + arch);
         Log.i(TAG, "trying to copy " + file_helper + " from assets");
         try {
             InputStream ins = getAssets().open(file_helper);
