@@ -4,6 +4,7 @@ import argparse
 import subprocess
 import os.path
 import sys
+import shutil
 
 def main(args):
     apkname = 'apkdemo'
@@ -14,7 +15,7 @@ def main(args):
 
 def build_all(apkname, target_pkg, args):
     gen_java(apkname, args.sdk)
-    build_binary()
+    build_binary(args.abi)
     build_package(apkname, target_pkg, args.mode)
 
 def gen_java(apkname, sdk):
@@ -22,8 +23,20 @@ def gen_java(apkname, sdk):
     msg = 'Generating build configuration files'
     try_exec(cmd, msg)
 
-def build_binary():
+def setup_jni_mk(abi):
+    dest_mk = './jni/Application.mk'
+    if os.path.exists(dest_mk):
+        os.remove(dest_mk)
+    src_mk = dest_mk + '.' + abi
+    if os.path.exists(src_mk):
+        shutil.copyfile(src_mk, dest_mk)
+    else:
+        print("copy Application.mk for JNI failed")
+        exit(1)
+
+def build_binary(abi):
     if os.path.exists('./jni'):
+        setup_jni_mk(abi)
         cmd = 'ndk-build clean && ndk-build'
         msg = 'Building native binary'
         try_exec(cmd, msg)
@@ -91,7 +104,7 @@ def parse_args():
     sdk = get_default_sdk()
     device, devices = get_devices()
     parser.add_argument('-s', '--sdk',      help='provide a SDK version', default=sdk)
-    parser.add_argument('-a', '--abi',      help='specify ABI of target device', choices=['armeabi', 'x86'], default='armeabi')
+    parser.add_argument('-a', '--abi',      help='specify ABI of target device', choices=['arm', 'x86'], default='arm')
     parser.add_argument('-m', '--mode',     help='the mode of target application', choices=['debug', 'release'], default='debug')
     parser.add_argument('-i', '--install',  help='whether to install after build', choices=[True, False], type=bool, default=True)
     parser.add_argument('-d', '--device',   help='specify the device to install package', choices=devices, default=device)

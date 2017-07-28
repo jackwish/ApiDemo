@@ -3,10 +3,13 @@ default: py
 PY := ./tools/build.py
 SH := ./tools/legacy_build.sh
 
-py:
+py: clean
 	${PY}
 
-sh:
+x86: clean
+	${PY} -a x86
+
+sh: clean
 	${SH}
 
 legacy: sh
@@ -16,4 +19,3 @@ clean:
 
 help:
 	${PY} -h
-

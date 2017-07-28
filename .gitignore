@@ -7,3 +7,4 @@ local.properties
 project.properties
 proguard-project.txt
 .ycm_extra_conf.py*
+jni/Application.mk
