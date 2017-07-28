@@ -26,6 +26,7 @@ public class MiscActivity extends Activity implements OnClickListener {
     private Button btnCreateFileStandalone;
     private Button btnOpenFileStandalone;
     private Button btnGetAbi;
+    private Button btnGetOsArch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,8 @@ public class MiscActivity extends Activity implements OnClickListener {
         btnOpenFileStandalone.setOnClickListener(this);
         btnGetAbi = (Button)findViewById(R.id.get_abi_native);
         btnGetAbi.setOnClickListener(this);
+        btnGetOsArch = (Button)findViewById(R.id.get_os_arch);
+        btnGetOsArch.setOnClickListener(this);
 
         // prepare create/open native file helper executable
         fileHelperPath = prepareExecutable();
@@ -72,6 +75,9 @@ public class MiscActivity extends Activity implements OnClickListener {
             break;
         case R.id.get_abi_native:
             retString = getAbi();
+            break;
+        case R.id.get_os_arch:
+            retString = getOsArch();
             break;
         default:
             break;
@@ -116,4 +122,9 @@ public class MiscActivity extends Activity implements OnClickListener {
 
     private static native String getAbi();
 
+    private static String getOsArch() {
+        String msg = "getProperty(\"os.arch\") got: " + System.getProperty("os.arch");
+        Log.i(TAG, msg);
+        return msg;
+    }
 }

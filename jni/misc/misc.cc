@@ -209,8 +209,9 @@ Java_com_young_apkdemo_MiscActivity_getAbi(JNIEnv *env, jobject obj)
     LOGI("in getAbi() native method");
     char buf[1024] = {'\0'};
     __system_property_get("ro.product.cpu.abi", buf);
-    LOGI("get ABI: %s", buf);
+    std::string msg = "__system_property_get(\"ro.product.cpu.abi\") got: " + std::string(buf);
+    LOGI("%s", msg.c_str());
 
-    return env->NewStringUTF(buf);
+    return env->NewStringUTF(msg.c_str());
 }
 
