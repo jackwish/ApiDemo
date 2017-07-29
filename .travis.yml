@@ -1,11 +1,14 @@
 language: android
-install: ant deps
+install: ant
 android:
   components:
     - platform-tools
     - build-tools-22.0.1
     - android-23
     - extra-android-support
+
+before_install:
+    cp ./jni/Application.mk.all ./jni/Application.mk
 
 notifications:
   email: true
