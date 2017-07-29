@@ -1,7 +1,11 @@
 language: android
-install: ant
+install: ant deps
 android:
   components:
+    - platform-tools
     - build-tools-22.0.1
     - android-23
-    - extra
+    - extra-android-support
+
+notifications:
+  email: true
