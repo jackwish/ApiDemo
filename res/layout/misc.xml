@@ -52,6 +52,12 @@
             android:text="@string/get_os_arch" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/get_cpuinfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/get_cpuinfo" />
+
     <TextView
         android:id="@+id/misc_text"
         android:layout_width="match_parent"

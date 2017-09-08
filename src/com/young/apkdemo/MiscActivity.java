@@ -1,5 +1,6 @@
 package com.young.apkdemo;
 
+import java.io.*;
 import com.young.apkdemo.R;
 import com.young.apkdemo.apkdemo;
 import android.app.Activity;
@@ -24,6 +25,7 @@ public class MiscActivity extends Activity implements OnClickListener {
     private Button btnOpenFileStandalone;
     private Button btnGetAbi;
     private Button btnGetOsArch;
+    private Button btnGetCpuinfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class MiscActivity extends Activity implements OnClickListener {
         btnGetAbi.setOnClickListener(this);
         btnGetOsArch = (Button)findViewById(R.id.get_os_arch);
         btnGetOsArch.setOnClickListener(this);
+        btnGetCpuinfo = (Button)findViewById(R.id.get_cpuinfo);
+        btnGetCpuinfo.setOnClickListener(this);
 
         // prepare create/open native file helper executable
         fileHelperPath = apkdemo.prepareExecutable(this, "file_helper");
@@ -76,6 +80,9 @@ public class MiscActivity extends Activity implements OnClickListener {
         case R.id.get_os_arch:
             retString = getOsArch();
             break;
+        case R.id.get_cpuinfo:
+            retString = getCpuinfo();
+            break;
         default:
             break;
         }
@@ -95,5 +102,21 @@ public class MiscActivity extends Activity implements OnClickListener {
         String msg = "getProperty(\"os.arch\") got: " + System.getProperty("os.arch");
         Log.i(TAG, msg);
         return msg;
+    }
+
+    private static String getCpuinfo() {
+        String msg = "";
+        String file = "/proc/cpuinfo";
+        try {
+            FileReader fr = new FileReader(file);
+            BufferedReader local = new BufferedReader(fr, 8192);
+            while ((msg = local.readLine()) != null) {
+                Log.i(TAG, msg + "\n");
+            }
+            local.close();
+            String ret = "get /proc/cpuinfo in adb log";
+            return ret;
+        } catch (IOException e) {}
+        return "can't get /proc/cpuinfo";
     }
 }
