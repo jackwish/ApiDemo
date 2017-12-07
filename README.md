@@ -16,7 +16,7 @@ So, basically, this is a collection of SDK/NDK related unit test for Android sys
     * Includes JNI functions, System call and Signal.
 
 * Dynamic Link
-    * Android Nougat feature [namespace].
+    * Android Nougat feature [namespace](https://android-developers.blogspot.com/2016/06/android-changes-for-ndk-developers.html).
     * Standard libdl API.
 
 * Misc
@@ -51,11 +51,8 @@ Just start the application and select the test you need.
 
 ## Backup
 
-Copyright 2014~2015 [Mu Weiyang].
+Copyright 2014~2015 [Mu Weiyang](https://github.com/young-mu).
 
-Copyright 2016~ [WANG Zhenhua].
+Copyright 2016~2017 [WANG Zhenhua](http://jackwish.net).
 
-
-[namespace]: https://android-developers.blogspot.com/2016/06/android-changes-for-ndk-developers.html
-[Mu Weiyang]: https://github.com/young-mu
-[WANG Zhenhua]: http://jackwish.net
+Copyright 2017~ [Jiang Yanbing](https://github.com/jybsnow).
